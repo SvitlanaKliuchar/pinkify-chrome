@@ -9,7 +9,7 @@ import MainLayout from './layouts/main-layout';
 
 // Import the components
 import IndexPage from './routes';
-import ContactPage from './routes/contact';
+import ContactPage from './routes/contacts';
 import SignInPage from './routes/sign-in';
 import SignUpPage from './routes/sign-up';
 import MainPage from './routes/main';
