@@ -27,10 +27,21 @@ app.use(express.json());
 app.use(cors()); 
 app.use('/songs', express.static(path.join(__dirname, 'songs')));
 
-// Connect to database and load initial data
-connectToDb();
-saveSongsToDB();
-saveQuotesToDB();
+const checkAndSaveData = async() => {
+    await connectToDb()
+
+    const songs = await Song.find();
+    const quotes = await Quote.find();
+
+    if (songs.length === 0) {
+        await saveSongsToDB();  
+    }
+
+    if (quotes.length === 0) {
+        await saveQuotesToDB();  
+    }
+}
+checkAndSaveData()
 
 // Song routes
 app.get('/play', async (req, res) => {
@@ -87,9 +98,19 @@ app.post('/quotes', async (req, res) => {
     res.status(200).json(newQuote);
 });
 
-app.get('/quotes/:id', async (req, res) => {
+app.delete('/quotes', async (req, res) => {
     try {
-        const quote = await Quote.findById(req.params.id);
+        await Quote.deleteMany({});
+        res.status(200).json({ message: 'All quotes deleted from the database.' });
+    } catch (error) {
+        console.error('Error clearing quotes from the database:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+})
+
+app.get('/quote', async (req, res) => {
+    try {
+        const quote = await Quote.findOne()
         if (quote) {
             res.status(200).json(quote);
         } else {

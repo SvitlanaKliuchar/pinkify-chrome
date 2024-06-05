@@ -10,7 +10,6 @@ import HomeLayout from './layouts/home-layout.jsx';
 // Import the routes
 import HomePage from './routes/home.jsx';
 import SignInPage from './routes/sign-in.jsx';
-import SignUpPage from './routes/sign-up.jsx';
 
 const router = createBrowserRouter([
   {
@@ -18,7 +17,6 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <HomePage /> },
       { path: "/sign-in/*", element: <SignInPage /> },
-      { path: "/sign-up/*", element: <SignUpPage /> },
       {
         element: <HomeLayout />,
         path: "home",
