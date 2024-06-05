@@ -1,5 +1,6 @@
-import fs from 'fs'; // Import the fs module for file system operations
-import { Song } from './models/song-model.js'; // Import your Song model
+import fs from 'fs'
+import { Song } from './models/song-model.js'
+import { Quote } from './models/quote-model.js'
 
 // Function to read files from the songs directory and save them to the database
 export const saveSongsToDB = async () => {
@@ -27,3 +28,31 @@ export const saveSongsToDB = async () => {
         console.error('Error saving songs to the database:', error);
     }
 };
+
+const mainAuthor = "Haruki Murakami"
+const quotesToAdd = [
+    { text: "Quote 1 text", author: mainAuthor },
+    { text: "Quote 2 text", author: mainAuthor },
+    { text: "Quote 2 text", author: mainAuthor },
+    { text: "Quote 2 text", author: mainAuthor },
+    { text: "Quote 2 text", author: mainAuthor },
+    { text: "Quote 2 text", author: mainAuthor },
+    { text: "Quote 2 text", author: mainAuthor },
+    { text: "Quote 2 text", author: mainAuthor },
+    { text: "Quote 2 text", author: mainAuthor },
+  ];
+
+
+
+export const saveQuotesToDB = async () => {
+    try {
+        for (const quoteData of quotesToAdd) {
+            const newQuote = new Quote(quoteData);
+            await newQuote.save();
+            console.log("Quote added:", newQuote);
+          }
+        console.log("All quotes added successfully.");
+    } catch (error) {
+        console.error("Error adding quotes:", error);
+    }
+}
