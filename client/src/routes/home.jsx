@@ -1,14 +1,18 @@
-import Header from "../components/header"
-import Quote from "../components/quote"
-import MusicPlayer from "../components/music-player"
-import SendNote from "../components/send-note"
+import Header from "../components/homepage/header"
+import Quote from "../components/homepage/quote"
+import MusicPlayer from "../components/homepage/music-player"
+import SendNote from "../components/homepage/send-note"
+import NavBar from "../components/homepage/nav-bar"
 
 export default function HomePage() {
 
     return  (<>
-    <Header />
-    <Quote />
-    <MusicPlayer />
-    <SendNote />
+    <div className="homepage-container">
+        <Header />
+        <Quote />
+        <MusicPlayer />
+        <SendNote />
+        <NavBar />
+    </div>
     </>)
 }
