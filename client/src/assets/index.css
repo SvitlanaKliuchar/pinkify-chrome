@@ -94,7 +94,9 @@
     background-color: pink;
 }
 
-.mp-btn {}
+.mp-btn {
+    cursor: pointer;
+}
 
 
 /* send note component */
@@ -110,7 +112,6 @@
 
 .label {
     font-size: 0.7rem;
-
 }
 
 #note {
