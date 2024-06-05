@@ -1,6 +1,7 @@
 #root {
     display: flex;
     place-content: center;
+    color: #141414;
 }
 
 .homepage-container {
@@ -9,7 +10,7 @@
     text-align: center;
     display: grid;
     grid-template-rows: repeat(5, 1fr);
-    border: 5px solid pink;
+    border: 8px solid pink;
     padding: 5px;
     font-family: 'Poppins', 'open-sans';
 }
@@ -31,6 +32,7 @@
 
 .btn {
     background-color: inherit;
+    color: inherit;
     border: none;
     padding: 4px;
 }
@@ -107,16 +109,19 @@
 }
 
 .label {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
+
 }
 
 #note {
     font-size: 1rem;
     padding: 10px;
+    border: 2px solid pink;
 }
 
 #email {
     font-size: 0.7rem;
+    border: 2px solid pink;
 }
 
 .send-btn {
