@@ -1,9 +1,7 @@
 import express from 'express'
-import { Quote } from '../config/models/quote-model'
+import { Quote } from '../config/models/quote-model.js'
 
-const router = express.Router()
-
-
+const quoteRouter = express.Router()
 
 router.get('/api/quotes', async (req, res) => {
     const quotes = await Quote.find()
@@ -19,3 +17,5 @@ router.post('/api/quotes', async (req, res) => {
 router.get('/api/quote/:id', async (req, res) => {
     const quote = await Quote.findOne()
 })
+
+export default quoteRouter
