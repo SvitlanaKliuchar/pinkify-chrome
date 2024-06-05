@@ -35,6 +35,7 @@
     color: inherit;
     border: none;
     padding: 4px;
+    cursor: pointer;
 }
 
 .lang-btn {

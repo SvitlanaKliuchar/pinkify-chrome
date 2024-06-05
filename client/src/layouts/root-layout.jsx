@@ -19,7 +19,7 @@ export default function RootLayout() {
       <header>
         <div>
           <SignedIn>
-            <Link to="/home"> <UserButton /></Link>
+            <Link to="/home"></Link>
           </SignedIn>
           <SignedOut>
             <Link to="/sign-in"></Link>

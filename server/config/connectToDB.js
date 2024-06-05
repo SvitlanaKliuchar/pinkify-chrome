@@ -8,4 +8,3 @@ export const connectToDb = () => {
         console.log(`Error connecting to DB: ${error}`)
     }
 }
-

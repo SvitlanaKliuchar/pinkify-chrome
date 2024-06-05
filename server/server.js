@@ -4,6 +4,7 @@ import cors from 'cors';
 import { connectToDb } from './config/connectToDB.js';
 import { Song } from './config/models/song-model.js';
 import { Quote } from './config/models/quote-model.js';
+import { Note } from './config/models/note-model.js'
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { saveSongsToDB, saveQuotesToDB } from './config/saveToDB.js';
@@ -42,6 +43,50 @@ const checkAndSaveData = async() => {
     }
 }
 checkAndSaveData()
+
+
+// Route to send a note
+app.post('/send-note', async (req, res) => {
+    const { sender, receiver, message } = req.body;
+
+    try {
+        // Create a new instance of the Note model
+        const newNote = new Note({ sender, receiver, message });
+
+        // Save the note to the database
+        await newNote.save();
+
+        res.status(200).json({ message: 'Note sent successfully' });
+    } catch (error) {
+        console.error('Error sending note:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
+// Route to get all notes for a user
+app.get('/user-notes/:email', async (req, res) => {
+    const email = req.params.email;
+    console.log('Received email:', email);
+
+    const userNotes = await Notes.find({receiver:email})
+
+    console.log('User notes:', userNotes);
+
+    res.status(200).json(userNotes);
+})
+
+// Route to delete all notes that are being stored for a specific user
+app.delete('/user-notes/:email', async (req, res) => {
+    try {
+        const email = req.params.email
+        await Note.deleteMany({receiver:email})
+        res.status(200).json({ message: 'All quotes deleted from the database.' });
+    } catch (error) {
+        console.error('Error clearing quotes from the database:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+})
 
 // Song routes
 app.get('/play', async (req, res) => {

@@ -1,6 +1,7 @@
 import fs from 'fs'
 import { Song } from './models/song-model.js'
 import { Quote } from './models/quote-model.js'
+import { Note } from './models/note-model.js'
 
 // Function to read files from the songs directory and save them to the database
 export const saveSongsToDB = async () => {
@@ -37,7 +38,7 @@ const quotesToAdd = [
     { text: "Pain is inevitable. Suffering is optional.", author: mainAuthor },
     { text: "If you remember me, then I don't care if everyone else forgets.", author: mainAuthor },
     { text: "Whatever it is you're seeking won't come in the form you're expecting.", author: mainAuthor },
-  ];
+];
 
 
 
