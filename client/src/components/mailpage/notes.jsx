@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { PiTrashLight } from "react-icons/pi";
 import { GoHeart, GoHeartFill } from "react-icons/go";
 
-export default function Note() {
+export default function Notes() {
     const [notes, setNotes] = useState([]);
     const { user } = useUser();
 

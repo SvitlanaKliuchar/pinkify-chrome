@@ -1,7 +1,7 @@
 import Header from '../components/homepage/header.jsx'
 import NavBar from '../components/homepage/nav-bar.jsx'
 import Heading from '../components/mailpage/heading.jsx'
-import Note from '../components/mailpage/note.jsx'
+import Notes from '../components/mailpage/notes.jsx'
 
 export default function MailPage() {
     
@@ -9,7 +9,7 @@ export default function MailPage() {
     <div className='mailpage-container'>
         <Header />
         <Heading  text="MailBox" />
-        <Note />
+        <Notes />
         <NavBar />
     </div>
     </>)
