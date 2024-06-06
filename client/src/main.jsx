@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './assets/index.css'
+import './assets/mailbox.css'
 
 // Import the layouts
 import RootLayout from './layouts/root-layout';
@@ -10,12 +11,14 @@ import HomeLayout from './layouts/home-layout.jsx';
 // Import the routes
 import HomePage from './routes/home.jsx';
 import SignInPage from './routes/sign-in.jsx';
+import MailPage from './routes/mail.jsx';
 
 const router = createBrowserRouter([
   {
     element: <RootLayout />,
     children: [
       { path: "/", element: <HomePage /> },
+      { path: "/mailbox", element: <MailPage /> },
       { path: "/sign-in/*", element: <SignInPage /> },
       {
         element: <HomeLayout />,

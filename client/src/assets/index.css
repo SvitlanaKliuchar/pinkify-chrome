@@ -3,8 +3,32 @@
     place-content: center;
     color: #141414;
 }
+.sign-in-container {
+    width: 400px;
+    height: 600px;
+    text-align: center;
+    display: flex;
+    gap: 10px;
+    place-content: center;
+    align-items: center;
+    border: 8px solid pink;
+    padding: 5px;
+    font-family: 'Poppins', 'open-sans';
+}
+.sign-in-btn, .sign-up-btn {
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
 
-.homepage-container {
+.sign-in-btn:hover, .sign-up-btn:hover {
+    background-color: #e0e0e0;
+}
+.homepage-container, .mailpage-container {
     width: 400px;
     height: 600px;
     text-align: center;
@@ -126,7 +150,7 @@
     border: 2px solid pink;
 }
 
-.send-btn {
+.send-btn{
     margin-top: -40px;
     font-size: 0.7rem;
     background-color: pink;
@@ -158,8 +182,9 @@
     left: 37%;
     z-index: -1;
 }
-.logo img {
+.logo-img {
     width: 110px;
+    height: auto;
 }
 img {
     width: 60px;

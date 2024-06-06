@@ -1,4 +1,5 @@
 import {useUser} from '@clerk/clerk-react'
+
 export default function Header(){
     const {user} = useUser()
     const userName = user ? user.fullName : "Guest";

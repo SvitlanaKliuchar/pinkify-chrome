@@ -8,17 +8,16 @@ export default function MusicPlayer() {
     const [isPlaying, setIsPlaying] = useState(false) //by default we set isPlaying boolean variable to false
     const [currentSong, setCurrentSong] = useState('')
     const audioRef = useRef(new Audio())
-    const BASE_URL = 'http://localhost:3000'
 
 
    
     const handlePlay = async () => {
         try {
-            const res = await axios.get(`${BASE_URL}/play`);
+            const res = await axios.get(`/api/play`);
             const newSongFilename = res.data.filename;
             setCurrentSong(newSongFilename);
             setIsPlaying(true);
-            audioRef.current.src = `${BASE_URL}/songs/${newSongFilename}`;
+            audioRef.current.src = `/api/songs/${newSongFilename}`;
             audioRef.current.play();
            
         } catch (error) {
@@ -28,11 +27,11 @@ export default function MusicPlayer() {
     
     const handlePrev = async () => {
         try {
-            const res = await axios.get(`${BASE_URL}/prev`);
+            const res = await axios.get(`/api/prev`);
             const newSongFilename = res.data.filename;
             setCurrentSong(newSongFilename);
             setIsPlaying(true);
-            audioRef.current.src = `${BASE_URL}/songs/${newSongFilename}`;
+            audioRef.current.src = `/api/songs/${newSongFilename}`;
             audioRef.current.play();
         } catch (error) {
             console.log("Error fetching or playing previous song");
@@ -40,11 +39,11 @@ export default function MusicPlayer() {
     }
     const handleNext = async () => {
         try {
-            const res = await axios.get(`${BASE_URL}/next`);
+            const res = await axios.get(`/api/next`);
             const newSongFilename = res.data.filename;
             setCurrentSong(newSongFilename);
             setIsPlaying(true);
-            audioRef.current.src = `${BASE_URL}/songs/${newSongFilename}`;
+            audioRef.current.src = `/api/songs/${newSongFilename}`;
             audioRef.current.play();
         } catch (error) {
             console.log("Error fetching or playing next song");

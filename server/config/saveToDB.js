@@ -1,7 +1,7 @@
 import fs from 'fs'
 import { Song } from './models/song-model.js'
 import { Quote } from './models/quote-model.js'
-import { Note } from './models/note-model.js'
+
 
 // Function to read files from the songs directory and save them to the database
 export const saveSongsToDB = async () => {

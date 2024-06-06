@@ -47,11 +47,11 @@ checkAndSaveData()
 
 // Route to send a note
 app.post('/send-note', async (req, res) => {
-    const { sender, receiver, message } = req.body;
+    const { sender, receiver, message, timestamp } = req.body;
 
     try {
         // Create a new instance of the Note model
-        const newNote = new Note({ sender, receiver, message });
+        const newNote = new Note({ sender, receiver, message, timestamp });
 
         // Save the note to the database
         await newNote.save();
@@ -69,7 +69,7 @@ app.get('/user-notes/:email', async (req, res) => {
     const email = req.params.email;
     console.log('Received email:', email);
 
-    const userNotes = await Notes.find({receiver:email})
+    const userNotes = await Note.find({receiver:email})
 
     console.log('User notes:', userNotes);
 

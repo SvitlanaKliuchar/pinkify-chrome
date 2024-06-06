@@ -4,12 +4,11 @@ import bunniesInLove from '../../assets/quote/bunnies-in-love.webp'
 
 export default function Quote() {
     const [fullQuote, setFullQuote] = useState({})
-    const BASE_URL = 'http://localhost:3000'
 
     useEffect(() => {
         const fetchQuote = async () => {
             try {
-                const res = await axios.get(`${BASE_URL}/quote`)
+                const res = await axios.get(`/api/quote`)
                 const newQuote = res.data.text
                 const newAuthor = res.data.author
                 setFullQuote({quote: newQuote, author: newAuthor})

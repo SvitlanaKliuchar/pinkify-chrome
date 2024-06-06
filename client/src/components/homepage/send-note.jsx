@@ -7,7 +7,6 @@ export default function SendNote() {
     const [noteInput, setNoteInput] = useState('');
     const [userLoaded, setUserLoaded] = useState(false);
     const { user } = useUser();
-    const BASE_URL = 'http://localhost:3000';
 
     useEffect(() => {
         // Check if user is loaded
@@ -28,17 +27,20 @@ export default function SendNote() {
             console.log('Sending note data:', {
                 sender: user.primaryEmailAddress?.emailAddress,
                 receiver: emailInput,
-                message: noteInput
+                message: noteInput,
             });
 
             // sending note data to backend API
-            await axios.post(`${BASE_URL}/send-note`, {
+            await axios.post(`/api/send-note`, {
                 sender: user.primaryEmailAddress?.emailAddress, 
                 receiver: emailInput, 
-                message: noteInput
+                message: noteInput,
             });
 
             console.log('Note sent successfully!');
+            
+            const newNote = response.data;
+            setNotes([...notes, newNote]);
         } catch (error) {
             console.error('Error sending note:', error);
             alert('Failed to send note. Please try again.');
