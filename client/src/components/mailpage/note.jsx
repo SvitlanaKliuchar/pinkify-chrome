@@ -102,12 +102,13 @@ export default function Note() {
                 <div key={note._id} className={note.isFav ? "fav-note-container" : "note-container"}>
                     <div className="sender">
                         <div className="sender-child">{note.sender}</div>
-                        <button className="btn fav-btn" onClick={() => {handleFavButton(note)}}>
-                            {note.isFav ? <GoHeartFill /> : <GoHeart />}
-                        </button>
-                        <button className="btn delete-btn" onClick={handleDeleteButton(note)}>
-                            <PiTrashLight />
-                        </button>
+                        <div className="btn-container">
+                            <button className="btn fav-btn" onClick={() => {handleFavButton(note)}}>
+                            {note.isFav ? <GoHeartFill /> : <GoHeart />}</button>
+                            <button className="btn delete-btn" onClick={handleDeleteButton(note)}>
+                                <PiTrashLight />
+                            </button>
+                        </div>
                     </div>
                     <div className="message">{note.message}</div>
                     <div className="timestamp">{note.timestamp}</div>

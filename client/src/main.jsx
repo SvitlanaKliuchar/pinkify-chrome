@@ -12,6 +12,7 @@ import HomeLayout from './layouts/home-layout.jsx';
 import HomePage from './routes/home.jsx';
 import SignInPage from './routes/sign-in.jsx';
 import MailPage from './routes/mail.jsx';
+import ContactsPage from './routes/contacts.jsx';
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <HomePage /> },
       { path: "/mailbox", element: <MailPage /> },
+      { path: "/contacts", element: <ContactsPage /> },
       { path: "/sign-in/*", element: <SignInPage /> },
       {
         element: <HomeLayout />,

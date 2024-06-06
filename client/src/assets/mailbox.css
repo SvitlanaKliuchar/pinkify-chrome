@@ -1,6 +1,6 @@
-/* .mailpage-container  is same as .homapage-container*/
+
 .heading {
-    margin-top: -82px;
+    margin-top: -2px;
     background-color: pink;
     padding: 5px;
     text-align: center;
@@ -8,22 +8,23 @@
     font-family: 'Poppins';
 }
 .all-notes-container {
-    padding: 5px;
-    height: 350px;
+    height: 405px;
     display: flex;
     gap: 5px;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     overflow: scroll;
 }
 .note-container, .fav-note-container {
     border: 1px solid pink;
     display: flex;
-    justify-content: space-between;
     flex-direction: column;
     font-size: 0.7rem;
     padding: 5px;
     margin: 0 20px 0 20px;
+
+   
+  
 }
 .fav-note-container {
     background-color: pink;
@@ -34,13 +35,17 @@
     font-size: 0.5rem;
 }
 .sender {
-    margin-right: auto;
     font-size: 0.5rem;
     display: flex;
 }
-.fav-btn {
-    margin-left: 90%;
+.btn-container {
+    margin-left: auto;
 }
 .message {
     margin: 20px 50px 20px 50px;
+}
+.delete-all-notes-btn {
+    color: pink;
+    font-family: inherit;
+    font-size: 0.6rem;
 }

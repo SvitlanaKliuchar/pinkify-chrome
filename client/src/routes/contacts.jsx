@@ -1,15 +1,14 @@
 import Header from '../components/homepage/header.jsx'
 import NavBar from '../components/homepage/nav-bar.jsx'
 import Heading from '../components/mailpage/heading.jsx'
-import Note from '../components/mailpage/note.jsx'
 
-export default function MailPage() {
+
+export default function ContactsPage() {
     
     return (<>
-    <div className='mailpage-container'>
+    <div className='contacts-container'>
         <Header />
-        <Heading  text="MailBox" />
-        <Note />
+        <Heading text="Contacts" />
         <NavBar />
     </div>
     </>)
