@@ -8,6 +8,9 @@ import { Note } from './config/models/note-model.js'
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { saveSongsToDB, saveQuotesToDB } from './config/saveToDB.js';
+import songRouter from './routes/song-routes.js';
+import noteRouter from './routes/note-routes.js';
+import quoteRouter from './routes/quote-routes.js';
 
 dotenv.config();
 
@@ -15,13 +18,6 @@ const app = express();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-let currentSongIndex = null;
-let songs = [];
-
-const loadSongs = async () => {
-    songs = await Song.find({}, '_id filename').lean(); // Fetch only _id and filename fields
-};
 
 // Middleware
 app.use(express.json());
@@ -45,126 +41,11 @@ const checkAndSaveData = async() => {
 checkAndSaveData()
 
 
-// Route to send a note
-app.post('/send-note', async (req, res) => {
-    const { sender, receiver, message, timestamp } = req.body;
-
-    try {
-        // Create a new instance of the Note model
-        const newNote = new Note({ sender, receiver, message, timestamp });
-
-        // Save the note to the database
-        await newNote.save();
-
-        res.status(200).json({ message: 'Note sent successfully' });
-    } catch (error) {
-        console.error('Error sending note:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
+app.use('/', noteRouter);
+app.use('/', songRouter)
+app.use('/', quoteRouter)
 
 
-// Route to get all notes for a user
-app.get('/user-notes/:email', async (req, res) => {
-    const email = req.params.email;
-    console.log('Received email:', email);
-
-    const userNotes = await Note.find({receiver:email})
-
-    console.log('User notes:', userNotes);
-
-    res.status(200).json(userNotes);
-})
-
-// Route to delete all notes that are being stored for a specific user
-app.delete('/user-notes/:email', async (req, res) => {
-    try {
-        const email = req.params.email
-        await Note.deleteMany({receiver:email})
-        res.status(200).json({ message: 'All quotes deleted from the database.' });
-    } catch (error) {
-        console.error('Error clearing quotes from the database:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-})
-
-// Song routes
-app.get('/play', async (req, res) => {
-    await loadSongs(); // Reload songs before selecting a random song
-    currentSongIndex = Math.floor(Math.random() * songs.length);
-    const randomSong = songs[currentSongIndex];
-    res.json({ id: randomSong._id, filename: randomSong.filename });
-});
-
-app.get('/prev', async (req, res) => {
-    await loadSongs(); // Reload songs before navigating to the previous song
-    currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
-    const previousSong = songs[currentSongIndex];
-    res.json({ id: previousSong._id, filename: previousSong.filename });
-});
-
-app.get('/next', async (req, res) => {
-    await loadSongs(); 
-    currentSongIndex = (currentSongIndex + 1) % songs.length;
-    const nextSong = songs[currentSongIndex];
-    res.json({ id: nextSong._id, filename: nextSong.filename });
-});
-
-app.get('/songs', async (req, res) => {
-    const songs = await Song.find();
-    res.status(200).json(songs);
-});
-
-app.post('/songs', async (req, res) => {
-    const newSong = new Song(req.body);
-    await newSong.save();
-    res.status(200).json(newSong);
-});
-
-app.delete('/songs', async (req, res) => {
-    try {
-        await Song.deleteMany({});
-        res.status(200).json({ message: 'All songs deleted from the database.' });
-    } catch (error) {
-        console.error('Error clearing songs from the database:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
-// Quote routes
-app.get('/quotes', async (req, res) => {
-    const quotes = await Quote.find();
-    res.status(200).json(quotes);
-});
-
-app.post('/quotes', async (req, res) => {
-    const newQuote = new Quote(req.body);
-    await newQuote.save();
-    res.status(200).json(newQuote);
-});
-
-app.delete('/quotes', async (req, res) => {
-    try {
-        await Quote.deleteMany({});
-        res.status(200).json({ message: 'All quotes deleted from the database.' });
-    } catch (error) {
-        console.error('Error clearing quotes from the database:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-})
-
-app.get('/quote', async (req, res) => {
-    try {
-        const quote = await Quote.findOne()
-        if (quote) {
-            res.status(200).json(quote);
-        } else {
-            res.status(404).json({ error: 'Quote not found' });
-        }
-    } catch (error) {
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
