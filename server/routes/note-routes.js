@@ -1,8 +1,7 @@
 import express from 'express';
-import { Note } from '../config/models/note-model.js'
+import { Note } from '../config/models/note-model.js';
 
-
-const noteRouter = express.Router()
+const noteRouter = express.Router();
 
 // Route to send a note
 noteRouter.post('/send-note', async (req, res) => {
@@ -22,29 +21,76 @@ noteRouter.post('/send-note', async (req, res) => {
     }
 });
 
-
 // Route to get all notes for a user
 noteRouter.get('/user-notes/:email', async (req, res) => {
     const email = req.params.email;
-    console.log('Received email:', email);
 
-    const userNotes = await Note.find({receiver:email})
-
-    console.log('User notes:', userNotes);
-
-    res.status(200).json(userNotes);
-})
+    try {
+        const userNotes = await Note.find({ receiver: email });
+        res.status(200).json(userNotes);
+    } catch (error) {
+        console.error('Error fetching user notes:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 
 // Route to delete all notes that are being stored for a specific user
 noteRouter.delete('/user-notes/:email', async (req, res) => {
+    const email = req.params.email;
+
     try {
-        const email = req.params.email
-        await Note.deleteMany({receiver:email})
-        res.status(200).json({ message: 'All quotes deleted from the database.' });
+        await Note.deleteMany({ receiver: email });
+        res.status(200).json({ message: 'All notes deleted from the database.' });
     } catch (error) {
-        console.error('Error clearing quotes from the database:', error);
+        console.error('Error clearing notes from the database:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-})
+});
 
-export default noteRouter
+// Route to delete a specific note for a specific user
+noteRouter.delete('/user-note/:email/:_id', async (req, res) => {
+    const email = req.params.email;
+    const noteId = req.params._id;
+
+    try {
+        await Note.deleteOne({ receiver: email, _id: noteId });
+        res.status(200).json({ message: `Note with id ${noteId} was deleted from the database.` });
+    } catch (error) {
+        console.error('Error deleting a note from the database:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+// Route to add a favorite note
+noteRouter.post('/fav-note', async (req, res) => {
+    const { sender, receiver, message, timestamp } = req.body;
+
+    try {
+        // Create a new instance of the Note model
+        const newFavoriteNote = new Note({ sender, receiver, message, timestamp, isFavorite: true });
+
+        // Save the favorite note to the database
+        await newFavoriteNote.save();
+
+        res.status(200).json({ message: 'Favorite note added successfully' });
+    } catch (error) {
+        console.error('Error adding favorite note:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+// Route to remove a favorite note
+noteRouter.delete('/fav-note/:email/:_id', async (req, res) => {
+    const email = req.params.email;
+    const noteId = req.params._id;
+
+    try {
+        await Note.deleteOne({ receiver: email, _id: noteId, isFavorite: true });
+        res.status(200).json({ message: `Favorite note with id ${noteId} was removed from the database.` });
+    } catch (error) {
+        console.error('Error removing favorite note:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+export default noteRouter;

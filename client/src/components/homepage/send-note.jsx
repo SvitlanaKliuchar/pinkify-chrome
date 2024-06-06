@@ -31,16 +31,13 @@ export default function SendNote() {
             });
 
             // sending note data to backend API
-            await axios.post(`/api/send-note`, {
+            const response = await axios.post(`/api/send-note`, {
                 sender: user.primaryEmailAddress?.emailAddress, 
                 receiver: emailInput, 
                 message: noteInput,
             });
 
             console.log('Note sent successfully!');
-            
-            const newNote = response.data;
-            setNotes([...notes, newNote]);
         } catch (error) {
             console.error('Error sending note:', error);
             alert('Failed to send note. Please try again.');
