@@ -1,0 +1,19 @@
+.send-drawing-container {
+   height: 380px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   place-content: center;
+   gap: 10px;
+}
+.color-picker-container, .line-width-container {
+    font-size: 0.7rem;
+    display: flex;
+    gap: 10px;
+    place-content: center;
+    align-items: center;
+}
+.canvas, .email-input {
+    border: 1px solid pink;
+    padding: 3px;
+}

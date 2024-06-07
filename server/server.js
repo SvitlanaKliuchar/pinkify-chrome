@@ -12,6 +12,7 @@ import songRouter from './routes/song-routes.js';
 import noteRouter from './routes/note-routes.js';
 import quoteRouter from './routes/quote-routes.js';
 import contactRouter from './routes/contact-routes.js';
+import drawingRouter from './routes/drawing-routes.js';
 
 dotenv.config();
 
@@ -46,8 +47,7 @@ app.use('/', noteRouter);
 app.use('/', songRouter)
 app.use('/', quoteRouter)
 app.use('/', contactRouter)
-
-
+app.use('/', drawingRouter)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
