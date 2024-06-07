@@ -31,7 +31,7 @@
 .sign-in-btn:hover, .sign-up-btn:hover {
     background-color: #e0e0e0;
 }
-.homepage-container, .mailpage-container, .contactspage-container{
+.homepage-container, .mailpage-container, .contactspage-container, .minigamespage-container{
     width: 435px;
     height: 630px;
     text-align: center;
@@ -54,7 +54,13 @@
 
 .language-config {
     margin-left: auto;
-
+    display: flex;
+    place-content: center;
+    align-items: center;
+}
+.settings-img {
+    width: 20px;
+    margin-top: 3px;
 }
 
 .btn {
@@ -113,7 +119,7 @@
 
 /* music player component */
 .music-player {
-    margin: 15px;
+    margin: 15px 40px 15px 40px;
     padding: 5px 0 5px 0;
     display: flex;
     place-content: center;
@@ -169,12 +175,12 @@
 
 .icons-left {
     display: flex;
-    gap: 8px;
+    gap: 20px;
 }
 
 .icons-right {
     display: flex;
-    gap: 8px;
+    gap: 20px;
 }
 
 .logo {
@@ -184,9 +190,16 @@
     z-index: -1;
 }
 .logo-img {
-    width: 110px;
+    width: 100px;
     height: auto;
 }
+.mini-games-img {
+    width: 65px;
+}
+.mail-img {
+    width: 75px;
+}
+
 img {
-    width: 60px;
+    width: 63px;
 }

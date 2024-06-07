@@ -1,4 +1,6 @@
 import {useUser} from '@clerk/clerk-react'
+import gear from '../../assets/homepage/gear.webp'
+import {Link} from 'react-router-dom'
 
 export default function Header(){
     const {user} = useUser()
@@ -10,6 +12,8 @@ export default function Header(){
             <button className="btn lang-btn">eng</button>
             <button className="btn lang-btn">ukr</button>
             <button className="btn lang-btn">pt</button>
+            <Link to='/settings'><img className='settings-img' src={gear} alt='settings icon' /></Link>
+            
         </div>
     </div>
     </>)

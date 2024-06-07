@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import bunniesInLove from '../../assets/quote/bunnies-in-love.webp'
+import bunniesInLove from '../../assets/homepage/bunnies-in-love.webp'
 
 export default function Quote() {
     const [fullQuote, setFullQuote] = useState({})

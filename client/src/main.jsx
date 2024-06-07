@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import './assets/index.css'
-import './assets/mailbox.css'
-import './assets/contacts.css'
+import './assets/styles/index.css'
+import './assets/styles/mailbox.css'
+import './assets/styles/contacts.css'
+import './assets/styles/mini-games.css'
 
 // Import the layouts
 import RootLayout from './layouts/root-layout';
@@ -14,6 +15,7 @@ import HomePage from './routes/home.jsx';
 import SignInPage from './routes/sign-in.jsx';
 import MailPage from './routes/mail.jsx';
 import ContactsPage from './routes/contacts.jsx';
+import MiniGamesPage from './routes/mini-games.jsx';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +24,7 @@ const router = createBrowserRouter([
       { path: "/", element: <HomePage /> },
       { path: "/mailbox", element: <MailPage /> },
       { path: "/contacts", element: <ContactsPage /> },
+      { path: "/mini-games", element: <MiniGamesPage /> },
       { path: "/sign-in/*", element: <SignInPage /> },
       {
         element: <HomeLayout />,
