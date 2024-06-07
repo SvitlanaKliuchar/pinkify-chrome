@@ -1,5 +1,6 @@
 import express from 'express';
 import { Note } from '../config/models/note-model.js';
+import { Contact } from '../config/models/contact-model.js'
 
 const noteRouter = express.Router();
 
@@ -26,13 +27,36 @@ noteRouter.get('/user-notes/:email', async (req, res) => {
     const email = req.params.email;
 
     try {
+        // Fetch all notes for the user
         const userNotes = await Note.find({ receiver: email });
+
+        // Fetch all contacts for the user
+        const userContacts = await Contact.find({ user: email });
+
+        // Create a set of contact emails for quick lookup
+        const contactEmails = new Set(userContacts.map(contact => contact.contactEmail));
+
+        // Iterate through all notes, check if sender is in contacts, and if not, add them
+        const newContacts = [];
+        for (const note of userNotes) {
+            if (!contactEmails.has(note.sender)) {
+                const newContact = new Contact({
+                    user: email,
+                    contactEmail: note.sender,
+                });
+                await newContact.save();
+                contactEmails.add(note.sender); // Update the set to include the new contact
+                newContacts.push(newContact); // Collect new contacts
+            }
+        }
+
         res.status(200).json(userNotes);
     } catch (error) {
         console.error('Error fetching user notes:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
 
 // Route to delete all notes that are being stored for a specific user
 noteRouter.delete('/user-notes/:email', async (req, res) => {

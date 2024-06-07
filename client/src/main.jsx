@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './assets/index.css'
 import './assets/mailbox.css'
+import './assets/contacts.css'
 
 // Import the layouts
 import RootLayout from './layouts/root-layout';

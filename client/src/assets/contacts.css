@@ -1,3 +1,41 @@
 .contacts-container {
-    height: 405px ;
+    height: 414px;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+    margin: 0 20px 0 20px;
+    padding: 5px;
+}
+.contact {
+    display: flex;
+    border: 1px solid pink;
+    padding: 10px;
+    margin: 10px;
+    font-size: 0.6rem;
+    display: flex;
+}
+.add-name-btn{
+    margin-left: auto;
+    font-size: inherit;
+    background-color: pink;
+    padding: 4px;
+    color: white;
+    border: none;
+}
+.contact-name-input {
+    display: flex;
+    place-content: center;
+    align-items: center;
+    margin-left: auto;
+}
+.contact-name {
+    margin-left: auto;
+}
+.save-name-btn {
+    font-size: inherit;
+}
+.name-input {
+    margin-left: auto;
+    width: 80px;
+    font-size: inherit;
 }

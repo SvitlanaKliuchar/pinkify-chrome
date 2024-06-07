@@ -40,6 +40,7 @@
     border: 8px solid pink;
     padding: 5px;
     font-family: 'Poppins', 'open-sans';
+    word-wrap: break-word;
 }
 
 /* header component  */
@@ -62,6 +63,7 @@
     border: none;
     padding: 4px;
     cursor: pointer;
+    font-family: "Poppins";
 }
 
 .lang-btn {
@@ -73,7 +75,7 @@
 .quote-container {
     padding: 5px;
     display: grid;
-    margin-bottom: 40px
+    margin-bottom: 30px
 }
 
 .quote {
@@ -152,7 +154,6 @@
 }
 
 .send-btn{
-    margin-top: ;
     font-size: 0.7rem;
     background-color: pink;
     padding: 3px 15px 3px 15px;
@@ -160,7 +161,6 @@
 }
 /* nav bar component */
 .nav-bar-container {
-    margin-top: ;
     position: relative;
     display: flex;
     justify-content: space-between;

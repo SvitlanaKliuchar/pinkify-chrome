@@ -9,7 +9,7 @@
 }
 .all-notes-container {
     display: flex;
-    height: 410px;
+    height: 415px;
     gap: 5px;
     flex-direction: column;
     justify-content: space-between;

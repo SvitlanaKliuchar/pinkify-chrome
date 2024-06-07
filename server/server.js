@@ -11,6 +11,7 @@ import { saveSongsToDB, saveQuotesToDB } from './config/saveToDB.js';
 import songRouter from './routes/song-routes.js';
 import noteRouter from './routes/note-routes.js';
 import quoteRouter from './routes/quote-routes.js';
+import contactRouter from './routes/contact-routes.js';
 
 dotenv.config();
 
@@ -44,10 +45,11 @@ checkAndSaveData()
 app.use('/', noteRouter);
 app.use('/', songRouter)
 app.use('/', quoteRouter)
+app.use('/', contactRouter)
 
 
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
