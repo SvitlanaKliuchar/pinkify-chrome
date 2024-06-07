@@ -16,6 +16,7 @@ import SignInPage from './routes/sign-in.jsx';
 import MailPage from './routes/mail.jsx';
 import ContactsPage from './routes/contacts.jsx';
 import MiniGamesPage from './routes/mini-games.jsx';
+import DoodleJump from './routes/doodle-jump.jsx';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
       { path: "/mailbox", element: <MailPage /> },
       { path: "/contacts", element: <ContactsPage /> },
       { path: "/mini-games", element: <MiniGamesPage /> },
+      { path: "/doodle-jump", element: <DoodleJump /> },
       { path: "/sign-in/*", element: <SignInPage /> },
       {
         element: <HomeLayout />,

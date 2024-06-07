@@ -6,6 +6,7 @@ import unicorn from '../../assets/mini-games/unicorn.webp'
 import catMilk from '../../assets/mini-games/cat-with-milk.webp'
 import snake from '../../assets/mini-games/snake.webp'
 import owl from '../../assets/mini-games/owl.webp'
+import {Link} from 'react-router-dom'
 
 export default function MiniGamesMenu(){
   return (<>
@@ -14,9 +15,8 @@ export default function MiniGamesMenu(){
         <div className="princess-greeting">Ah, a traveler has arrived! I bid thee welcome to our realm of delightful mini games!</div>
         <img className="greeting-box" src={message} alt="a pixelated message box" />
         <div className="mini-games">
-            <div className="snake"><img src={whiteCat} alt="white cat icon" /></div>
-            <div className="tetris"><img src={owl} alt="" /></div>
-            <div className="doodle-jump"><img src={snake} alt="" /></div>
+            <div className="doodle-jump"><Link to='/doodle-jump'><img src={owl} alt="owl icon" /></Link></div>
+            <div className="game2"><img src={snake} alt="" /></div>
             <div className="cards"><img src={catMilk} alt="" /></div>
         </div>
     </div>
