@@ -11,101 +11,52 @@ export default function Drawings() {
 
     const fetchDrawings = async () => {
         try {
-            if (user) { 
+            if (user) {
                 const res = await axios.get(`/api/drawings/${user.primaryEmailAddress.emailAddress}`);
-                console.log(res.data);
                 setDrawings(res.data);
             }
         } catch (error) {
             console.log("Error fetching drawings", error);
         }
-    }
+    };
+
     useEffect(() => {
         fetchDrawings();
     }, [user]);
 
-    if (!drawings) {
-        return <div>Loading...</div>;
-    }
-
-    const addFavDrawing = async (drawing) => {
+    const toggleFavoriteDrawing = async (drawing) => {
         try {
-            await axios.post(`/api/fav-drawing`, {
-                sender: drawing.sender,
-                receiver: drawing.receiver,
-                image: drawing.image,
+            await axios.post('/api/toggle-fav-drawing', {
+                email: user.primaryEmailAddress.emailAddress,
+                drawingId: drawing._id
             });
-            console.log('Fav drawing added successfully!',{
-                sender: drawing.sender,
-                receiver: drawing.receiver,
-                image: drawing.image,
-            });
+            drawing.isFavorite = !drawing.isFavorite;
+            setDrawings(drawings.map(d => (d._id === drawing._id ? { ...drawing } : d)));
         } catch (error) {
-            console.log("Error adding fav drawing on frontend", error);
+            console.log("Error toggling favorite drawing", error);
         }
     };
-
-    const removeFavDrawing = async (drawing) => {
-        try {
-            await axios.delete(`/api/fav-drawing/${user.primaryEmailAddress.emailAddress}/${drawing._id}`);
-            console.log('Fav drawing removed successfully!');
-        } catch (error) {
-            console.log("Error removing fav drawing on frontend", error);
-        }
-    };
-
-    const handleFavButton = async (drawing) => {
-        try {
-            if (!drawing.isFav) {
-                await addFavDrawing(drawing);
-            } else {
-                await removeFavDrawing(drawing);
-            }
-            // Update the favorite status of the specific drawing
-            drawing.isFav = !drawing.isFav;
-            // Update the drawings state to reflect the change
-            setDrawings(prevDrawings => {
-                return prevDrawings.map(d => {
-                    if (d._id === drawing._id) {
-                        return { ...drawing };
-                    }
-                    return d;
-                });
-            });
-        } catch (error) {
-            console.log("Error toggling fav drawing", error);
-        }
-    };
-
-
 
     const deleteDrawing = async (drawing) => {
         try {
             await axios.delete(`/api/drawings/${user.primaryEmailAddress.emailAddress}/${drawing._id}`);
-            console.log("Drawing deleted successfully");
-            const updatedDrawings = drawings.filter((d) => d._id !== drawing._id);
-            setDrawings(updatedDrawings);
+            setDrawings(drawings.filter(d => d._id !== drawing._id));
         } catch (error) {
-            console.log("Error removing drawing", error);
+            console.log("Error deleting drawing", error);
         }
-    };
-
-    const handleDeleteButton = (drawing) => {
-        return () => { 
-            deleteDrawing(drawing);
-        };
     };
 
     return (
         <div className="all-notes-container">
-            {drawings.map((drawing) => (
-                <div key={drawing._id} className={drawing.isFav ? "fav-note-container" : "note-container"}>
+            {drawings.map(drawing => (
+                <div key={drawing._id} className={drawing.isFavorite ? "fav-note-container" : "note-container"}>
                     <div className="sender">
                         <div className="sender-child">{drawing.sender}</div>
                         <div className="btn-container">
-                            <button className="btn fav-btn" onClick={() => {handleFavButton(drawing)}}>
-                            {drawing.isFav ? <GoHeartFill /> : <GoHeart />}</button>
-                            <button className="btn delete-btn" onClick={handleDeleteButton(drawing)}>
+                            <button className="btn fav-btn" onClick={() => toggleFavoriteDrawing(drawing)}>
+                                {drawing.isFavorite ? <GoHeartFill /> : <GoHeart />}
+                            </button>
+                            <button className="btn delete-btn" onClick={() => deleteDrawing(drawing)}>
                                 <PiTrashLight />
                             </button>
                         </div>
@@ -118,4 +69,4 @@ export default function Drawings() {
             ))}
         </div>
     );
-};
+}

@@ -17,6 +17,10 @@ const DrawingSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  isFavorite: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 const Drawing = mongoose.model('Drawing', DrawingSchema);

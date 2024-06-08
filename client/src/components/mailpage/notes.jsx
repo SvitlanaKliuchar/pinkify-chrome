@@ -11,101 +11,52 @@ export default function Notes() {
 
     const fetchNotes = async () => {
         try {
-            if (user) { // Ensure user object exists before fetching notes
+            if (user) {
                 const res = await axios.get(`/api/user-notes/${user.primaryEmailAddress.emailAddress}`);
-                console.log(res.data);
                 setNotes(res.data);
             }
         } catch (error) {
             console.log("Error fetching notes", error);
         }
-    }
+    };
+
     useEffect(() => {
         fetchNotes();
     }, [user]);
 
-    if (!notes) {
-        return <div>Loading...</div>;
-    }
-
-    const addFavNote = async (note) => {
+    const toggleFavoriteNote = async (note) => {
         try {
-            await axios.post(`/api/fav-note`, {
-                sender: note.sender,
-                receiver: note.receiver,
-                message: note.message,
+            await axios.post('/api/toggle-fav-note', {
+                email: user.primaryEmailAddress.emailAddress,
+                noteId: note._id
             });
-            console.log('Fav note added successfully!',{
-                sender: note.sender,
-                receiver: note.receiver,
-                message: note.message,
-            });
+            note.isFavorite = !note.isFavorite;
+            setNotes(notes.map(n => (n._id === note._id ? { ...note } : n)));
         } catch (error) {
-            console.log("Error adding fav note on frontend", error);
+            console.log("Error toggling favorite note", error);
         }
     };
-
-    const removeFavNote = async (note) => {
-        try {
-            await axios.delete(`/api/fav-note/${user.primaryEmailAddress.emailAddress}/${note._id}`);
-            console.log('Fav note removed successfully!');
-        } catch (error) {
-            console.log("Error removing fav note on frontend", error);
-        }
-    };
-
-    const handleFavButton = async (note) => {
-        try {
-            if (!note.isFav) {
-                await addFavNote(note);
-            } else {
-                await removeFavNote(note);
-            }
-            // Update the favorite status of the specific note
-            note.isFav = !note.isFav;
-            // Update the notes state to reflect the change
-            setNotes(prevNotes => {
-                return prevNotes.map(n => {
-                    if (n._id === note._id) {
-                        return { ...note };
-                    }
-                    return n;
-                });
-            });
-        } catch (error) {
-            console.log("Error toggling fav note", error);
-        }
-    };
-
-
 
     const deleteNote = async (note) => {
         try {
             await axios.delete(`/api/user-note/${user.primaryEmailAddress.emailAddress}/${note._id}`);
-            console.log("Note deleted successfully");
-            const updatedNotes = notes.filter((n) => n._id !== note._id);
-            setNotes(updatedNotes);
+            setNotes(notes.filter(n => n._id !== note._id));
         } catch (error) {
-            console.log("Error removing note", error);
+            console.log("Error deleting note", error);
         }
-    };
-
-    const handleDeleteButton = (note) => {
-        return () => { 
-            deleteNote(note);
-        };
     };
 
     return (
         <div className="all-notes-container">
-            {notes.map((note) => (
-                <div key={note._id} className={note.isFav ? "fav-note-container" : "note-container"}>
+            {notes.map(note => (
+                <div key={note._id} className={note.isFavorite ? "fav-note-container" : "note-container"}>
                     <div className="sender">
                         <div className="sender-child">{note.sender}</div>
                         <div className="btn-container">
-                            <button className="btn fav-btn" onClick={() => {handleFavButton(note)}}>
-                            {note.isFav ? <GoHeartFill /> : <GoHeart />}</button>
-                            <button className="btn delete-btn" onClick={handleDeleteButton(note)}>
+                            <button className="btn fav-btn" onClick={() => toggleFavoriteNote(note)}>
+                                {note.isFavorite ? <GoHeartFill /> : <GoHeart />}
+                            </button>
+                            <button className="btn delete-btn" onClick={() => deleteNote(note)}>
                                 <PiTrashLight />
                             </button>
                         </div>
@@ -116,4 +67,4 @@ export default function Notes() {
             ))}
         </div>
     );
-};
+}

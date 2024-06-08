@@ -1,6 +1,6 @@
 import express from 'express';
 import { Note } from '../config/models/note-model.js';
-import { Contact } from '../config/models/contact-model.js'
+import { Contact } from '../config/models/contact-model.js';
 
 const noteRouter = express.Router();
 
@@ -9,12 +9,8 @@ noteRouter.post('/send-note', async (req, res) => {
     const { sender, receiver, message, timestamp } = req.body;
 
     try {
-        // Create a new instance of the Note model
         const newNote = new Note({ sender, receiver, message, timestamp });
-
-        // Save the note to the database
         await newNote.save();
-
         res.status(200).json({ message: 'Note sent successfully' });
     } catch (error) {
         console.error('Error sending note:', error);
@@ -27,26 +23,17 @@ noteRouter.get('/user-notes/:email', async (req, res) => {
     const email = req.params.email;
 
     try {
-        // Fetch all notes for the user
         const userNotes = await Note.find({ receiver: email });
-
-        // Fetch all contacts for the user
         const userContacts = await Contact.find({ user: email });
-
-        // Create a set of contact emails for quick lookup
         const contactEmails = new Set(userContacts.map(contact => contact.contactEmail));
 
-        // Iterate through all notes, check if sender is in contacts, and if not, add them
         const newContacts = [];
         for (const note of userNotes) {
             if (!contactEmails.has(note.sender)) {
-                const newContact = new Contact({
-                    user: email,
-                    contactEmail: note.sender,
-                });
+                const newContact = new Contact({ user: email, contactEmail: note.sender });
                 await newContact.save();
-                contactEmails.add(note.sender); // Update the set to include the new contact
-                newContacts.push(newContact); // Collect new contacts
+                contactEmails.add(note.sender);
+                newContacts.push(newContact);
             }
         }
 
@@ -56,7 +43,6 @@ noteRouter.get('/user-notes/:email', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-
 
 // Route to delete all notes that are being stored for a specific user
 noteRouter.delete('/user-notes/:email', async (req, res) => {
@@ -85,34 +71,34 @@ noteRouter.delete('/user-note/:email/:_id', async (req, res) => {
     }
 });
 
-// Route to add a favorite note
-noteRouter.post('/fav-note', async (req, res) => {
-    const { sender, receiver, message, timestamp } = req.body;
+noteRouter.post('/toggle-fav-note', async (req, res) => {
+    const { email, noteId } = req.body;
 
     try {
-        // Create a new instance of the Note model
-        const newFavoriteNote = new Note({ sender, receiver, message, timestamp, isFavorite: true });
-
-        // Save the favorite note to the database
-        await newFavoriteNote.save();
-
-        res.status(200).json({ message: 'Favorite note added successfully' });
+        const note = await Note.findOne({ _id: noteId, receiver: email });
+        if (note) {
+            note.isFavorite = !note.isFavorite;
+            await note.save();
+            res.status(200).json({ message: 'Favorite status toggled successfully', note });
+        } else {
+            res.status(404).json({ error: 'Note not found' });
+        }
     } catch (error) {
-        console.error('Error adding favorite note:', error);
+        console.error('Error toggling favorite note:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
-// Route to remove a favorite note
-noteRouter.delete('/fav-note/:email/:_id', async (req, res) => {
+
+// Route to get all favorite notes
+noteRouter.get('/fav-notes/:email', async (req, res) => {
     const email = req.params.email;
-    const noteId = req.params._id;
 
     try {
-        await Note.deleteOne({ receiver: email, _id: noteId, isFavorite: true });
-        res.status(200).json({ message: `Favorite note with id ${noteId} was removed from the database.` });
+        const favoriteNotes = await Note.find({ receiver: email, isFavorite: true });
+        res.status(200).json(favoriteNotes);
     } catch (error) {
-        console.error('Error removing favorite note:', error);
+        console.error('Error fetching favorite notes:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });

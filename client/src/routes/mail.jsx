@@ -5,11 +5,12 @@ import Notes from '../components/mailpage/notes.jsx'
 import Drawings from '../components/mailpage/drawings.jsx'
 import Tabs from '../components/mailpage/tabs.jsx'; 
 import { useState } from 'react';
+import Favourites from '../components/mailpage/favourites.jsx'
 
 export default function MailPage() {
     const [activeTab, setActiveTab] = useState(0);
 
-    const tabs = ["Notes", "Drawings"];
+    const tabs = ["Notes", "Drawings", "Favourites"];
 
     return (<>
     <div className='mailpage-container'>
@@ -18,6 +19,7 @@ export default function MailPage() {
         <Tabs tabs={tabs} activeTab={activeTab} onTabClick={setActiveTab} />
         {activeTab === 0 && <Notes />}
         {activeTab === 1 && <Drawings />}
+        {activeTab === 2 && <Favourites />}
         <NavBar />
     </div>
     </>)
