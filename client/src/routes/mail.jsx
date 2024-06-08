@@ -2,14 +2,22 @@ import Header from '../components/homepage/header.jsx'
 import NavBar from '../components/homepage/nav-bar.jsx'
 import Heading from '../components/mailpage/heading.jsx'
 import Notes from '../components/mailpage/notes.jsx'
+import Drawings from '../components/mailpage/drawings.jsx'
+import Tabs from '../components/mailpage/tabs.jsx'; 
+import { useState } from 'react';
 
 export default function MailPage() {
-    
+    const [activeTab, setActiveTab] = useState(0);
+
+    const tabs = ["Notes", "Drawings"];
+
     return (<>
     <div className='mailpage-container'>
         <Header />
         <Heading  text="MailBox" />
-        <Notes />
+        <Tabs tabs={tabs} activeTab={activeTab} onTabClick={setActiveTab} />
+        {activeTab === 0 && <Notes />}
+        {activeTab === 1 && <Drawings />}
         <NavBar />
     </div>
     </>)
