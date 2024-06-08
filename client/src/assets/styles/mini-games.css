@@ -60,5 +60,60 @@
 
 /* doodle jump */
 .doodle-jump-container {
+    position: relative;
+    height: 480px;
+  }
+  
+  .doodle-jump-grid {
+    height: 100%;
+    font-family: "VT323";
+    background-color: #4bff9f;
+    background-image: url('../../assets/mini-games/doodle-jump/doodle-jump-bg.png');
+    position: relative;
+    font-size: 200px;
+    text-align: center;
+  }
+  
+  .doodler {
+    width: 60px;
+    height: 85px;
+    position: absolute;
+  }
+  
+  .platform {
+    width: 85px;
+    height: 15px;
+    position: absolute;
+  }
+  
+  .introduction {
+    font-size: 24px;
+    font-family: inherit;
+    padding: 5px;
+    margin: 20px 10px 0 10px;
+    color: pink;
+    background-color: white;
+    border-radius: 10px;
+    line-height: 1.5;
+  }
+  .game-name {
     
-}
+  }
+  .instructions {
+    color: greenyellow;
+  }
+  
+  .score {
+    font-size: 2rem;
+    color: #141414;
+    top: 10px;
+    text-align: right;
+    margin-right: 20px;
+  }
+  .flex {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: #4bff9f;
+    border-top: 2px solid #ff4bd5;
+  }

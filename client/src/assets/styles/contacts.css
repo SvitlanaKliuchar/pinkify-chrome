@@ -17,6 +17,7 @@
 .add-name-btn{
     margin-left: auto;
     font-size: inherit;
+    font-family: inherit;
     background-color: pink;
     padding: 4px;
     color: white;
