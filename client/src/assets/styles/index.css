@@ -38,7 +38,8 @@
 .doodlejumppage-container, 
 .senddrawingpage-container,
 .wordsearchpage-container,
-.sudokupage-container{
+.sudokupage-container,
+.game2048page-container{
     width: 435px;
     height: 630px;
     text-align: center;

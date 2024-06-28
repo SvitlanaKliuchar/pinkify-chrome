@@ -16,6 +16,7 @@ export default function MiniGamesMenu(){
             <div className="doodle-jump"><Link to='/doodle-jump'><img src={owl} alt="owl icon" /></Link></div>
             <div className="word-search"><Link to='/word-search'><img src={catMilk} alt="word search icon" /></Link></div>
             <div className="sudoku"><Link to='/sudoku'><img src={catMilk} alt="sudoku icon" /></Link></div>
+            <div className="game2048"><Link to='/2048'><img src={catMilk} alt="2048 icon" /></Link></div>
         </div>
     </div>
   </>)

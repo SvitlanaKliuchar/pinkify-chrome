@@ -20,6 +20,7 @@ import MiniGamesPage from './routes/mini-games.jsx';
 import DoodleJump from './routes/doodle-jump.jsx';
 import WordSearch from './routes/word-search.jsx';
 import Sudoku from './routes/sudoku.jsx';
+import TwoZeroFourEight from './routes/game2048.jsx';
 import SendDrawingPage from './routes/send-drawing.jsx';
 
 
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
       { path: "/doodle-jump", element: <DoodleJump /> },
       { path: "/word-search", element: <WordSearch /> },
       { path: "/sudoku", element: <Sudoku /> },
+      { path: "/2048", element: <TwoZeroFourEight /> },
       { path: "/send-drawing", element: <SendDrawingPage /> },
       { path: "/sign-in/*", element: <SignInPage /> },
       {
