@@ -31,7 +31,14 @@
 .sign-in-btn:hover, .sign-up-btn:hover {
     background-color: #e0e0e0;
 }
-.homepage-container, .mailpage-container, .contactspage-container, .minigamespage-container, .doodlejumppage-container, .senddrawingpage-container{
+.homepage-container, 
+.mailpage-container, 
+.contactspage-container, 
+.minigamespage-container, 
+.doodlejumppage-container, 
+.senddrawingpage-container,
+.wordsearchpage-container,
+.sudokupage-container{
     width: 435px;
     height: 630px;
     text-align: center;
@@ -48,6 +55,7 @@
     font-size: 0.7rem;
     padding: 4px;
     display: flex;
+    align-items: center;
     border-bottom: 1px solid pink;
 
 }

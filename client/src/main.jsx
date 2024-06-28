@@ -18,7 +18,10 @@ import MailPage from './routes/mail.jsx';
 import ContactsPage from './routes/contacts.jsx';
 import MiniGamesPage from './routes/mini-games.jsx';
 import DoodleJump from './routes/doodle-jump.jsx';
+import WordSearch from './routes/word-search.jsx';
+import Sudoku from './routes/sudoku.jsx';
 import SendDrawingPage from './routes/send-drawing.jsx';
+
 
 const router = createBrowserRouter([
   {
@@ -29,6 +32,8 @@ const router = createBrowserRouter([
       { path: "/contacts", element: <ContactsPage /> },
       { path: "/mini-games", element: <MiniGamesPage /> },
       { path: "/doodle-jump", element: <DoodleJump /> },
+      { path: "/word-search", element: <WordSearch /> },
+      { path: "/sudoku", element: <Sudoku /> },
       { path: "/send-drawing", element: <SendDrawingPage /> },
       { path: "/sign-in/*", element: <SignInPage /> },
       {

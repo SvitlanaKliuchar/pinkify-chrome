@@ -79,30 +79,37 @@ export default function DoodleJumpGame() {
     },
     [direction],
   );
-  const jump = useCallback(
-    (doodlerToJump) => {
-      let newLeft = doodlerToJump.left;
-      if (direction === 'left' && doodlerToJump.left >= 0) {
-        newLeft = doodlerToJump.left - 5;
-      }
-      if (direction === 'right' && doodlerToJump.left <= 340) {
-        newLeft = doodlerToJump.left + 5;
-      }
-      if (direction === 'none') {
-        newLeft = doodlerToJump.left;
-      }
+  const jump = useCallback((doodlerToJump) => {
+    let newLeft = doodlerToJump.left;
+    if (direction === "left" && doodlerToJump.left >= 0) {
+      newLeft = doodlerToJump.left - 5;
+    }
+    if (direction === "right" && doodlerToJump.left <= 340) {
+      newLeft = doodlerToJump.left + 5;
+    }
+    if (direction === "none") {
+      newLeft = doodlerToJump.left;
+    }
+    
+    // Adjust how high the doodler can jump (change the 20 value if needed)
+    const jumpHeight = 200; // Adjust this value as needed
+    const maxJumpHeight = doodlerToJump.startPoint + jumpHeight;
+    
+    // Only jump if the doodler's bottom position is within the maximum jump height
+    if (doodlerToJump.bottom <= maxJumpHeight) {
       setDoodler({
         ...doodlerToJump,
         bottom: doodlerToJump.bottom + 20,
         left: newLeft,
       });
-      if (doodlerToJump.bottom > doodlerToJump.startPoint + 200) {
-        setDoodler({ ...doodlerToJump, isJumping: false });
-      }
-    },
-    [direction],
-  );
-
+    } else {
+      setDoodler({
+        ...doodlerToJump,
+        isJumping: false, // Stop jumping once max height is reached
+      });
+    }
+  }, [direction]);
+  
   // if the doodler hits a wall, reverse direction
   function checkCollision(doodlerforCollisionCheck) {
     if (doodlerforCollisionCheck.left <= 0) {

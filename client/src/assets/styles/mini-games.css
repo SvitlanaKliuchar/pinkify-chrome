@@ -117,3 +117,98 @@
     background-color: #4bff9f;
     border-top: 2px solid #ff4bd5;
   }
+/* word search */
+.wordsearch-container {
+  position: relative;
+  height: 480px;
+}
+.word-search-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.word-search-row {
+  display: flex;
+}
+
+.word-search-cell {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.word-search-cell.selected {
+  background-color: #ddd;
+}
+.word-list {
+  margin-bottom: 20px;
+}
+
+.word-list h2 {
+  margin-bottom: 10px;
+}
+
+.word-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.word-list li {
+  padding: 5px;
+  font-size: 18px;
+}
+
+.word-list li.found {
+  text-decoration: line-through;
+  color: #999;
+}
+.word-search-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.word-search-game h1 {
+  margin-bottom: 20px;
+}
+
+.word-search-game button {
+  margin-top: 20px;
+}
+/* sudoku */
+.game-sudoku {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.sudoku-grid {
+  display: grid;
+  grid-template-columns: repeat(9, 40px);
+  gap: 2px;
+}
+
+.sudoku-row {
+  display: contents;
+}
+
+.sudoku-cell {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  font-size: 24px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.sudoku-cell.selected {
+  border: 2px solid #007bff;
+  background-color: #e6f7ff;
+}
