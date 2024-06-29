@@ -36,26 +36,56 @@
 }
 .mini-games {
     margin-bottom: -80px;
-    margin-left: -30px;
+    margin-left: -80px;
     gap: 15px;
     padding: 10px;
     grid-area: mini-games;
     display: grid;
     grid-template-columns: repeat(1, 1fr);
 }
-.mini-games div {
-    height: 90px;
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    place-content: center;
-    border-radius: 50%;
-    cursor: pointer;
-    border: 3px solid pink;
-    background-color: pink;
+.mini-game {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 2px solid pink;
+  background-color: pink;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 10px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
-.mini-games div:hover {
+.mini-game:hover {
     background-color: white;
+    transform: scale(1.05);
+    color: pink;
+}
+.explore-btn {
+  grid-column: span 2;
+  text-decoration: none;
+  background-color: pink;
+  color: white;
+  padding: 1em 2em;
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.explore-btn:hover {
+  transform: scale(1.05);
+}
+.mini-games-selection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  border-radius: 10px;
 }
 
 /* doodle jump */
@@ -86,7 +116,7 @@
     position: absolute;
   }
   
-  .introduction {
+  .introduction-doodle-jump {
     font-size: 24px;
     font-family: inherit;
     padding: 5px;
@@ -96,26 +126,17 @@
     border-radius: 10px;
     line-height: 1.5;
   }
-  .game-name {
-    
-  }
-  .instructions {
+
+  .instructions-doodle-jump {
     color: greenyellow;
   }
   
-  .score {
+  .score-doodle-jump {
     font-size: 2rem;
     color: #141414;
     top: 10px;
     text-align: right;
     margin-right: 20px;
-  }
-  .flex {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    background-color: #4bff9f;
-    border-top: 2px solid #ff4bd5;
   }
 /* word search */
 .wordsearch-container {
@@ -180,19 +201,28 @@
 .word-search-game button {
   margin-top: 20px;
 }
-/* sudoku */
+/* Sudoku Game */
 .game-sudoku {
+  width: 410px;
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
-  margin: 20px;
+  align-items: center;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  
 }
 
 .sudoku-grid {
   display: grid;
-  grid-template-columns: repeat(9, 40px);
+  grid-template-columns: repeat(9, 1fr);
   gap: 2px;
+  background-color: #ccc;
+  padding: 2px;
+  border-radius: 10px;
+  border: 2px solid #1e1d1d;
 }
 
 .sudoku-row {
@@ -203,18 +233,39 @@
   width: 40px;
   height: 40px;
   text-align: center;
-  font-size: 24px;
-  border: 1px solid #ccc;
-  outline: none;
+  font-size: 1.5em;
+  background-color: white;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+}
+
+.sudoku-cell.highlight {
+  background-color: #e6e6e6;
 }
 
 .sudoku-cell.selected {
-  border: 2px solid #007bff;
-  background-color: #e6f7ff;
+  background-color: pink;
 }
-/* 2048 */
+
+.solve-button {
+  margin-top: 15px;
+  padding: 8px 16px;
+  font-size: 0.9em;
+  background-color: pink;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.solve-button:hover {
+  background-color: blue;
+}
+
+/* 2048 Game */
 .game-2048-container {
-  font-family: 'Arial', sans-serif;
+  font-family: 'Poppins', 'open-sans';
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -222,31 +273,31 @@
   background-color: #faf8ef;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 100%;
 }
 
-.game-2048-container h1 {
-  font-size: 2.5em;
-  margin-bottom: 20px;
+.score {
+  font-size: 1.5em;
   color: #776e65;
+  margin-bottom: 10px;
 }
 
 .grid {
-  display: inline-grid;
-  grid-template-columns: repeat(4, 100px);
-  grid-gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  row-gap: 5px;
   background-color: #bbada0;
   padding: 10px;
   border-radius: 10px;
-  position: relative;
-}
-
-.row {
-  display: contents;
+  width: 100%;
+  height: 100%;
 }
 
 .cell {
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  height: 80px;
   background-color: #cdc1b4;
   display: flex;
   justify-content: center;
@@ -254,11 +305,60 @@
   font-size: 2em;
   font-weight: bold;
   border-radius: 5px;
-  transition: all 0.3s ease-in-out;
+  transition: transform 0.2s ease-in-out;
 }
 
 .cell-null {
   background-color: #cdc1b4;
+}
+
+.cell-2,
+.cell-4,
+.cell-8,
+.cell-16,
+.cell-32,
+.cell-64,
+.cell-128,
+.cell-256,
+.cell-512,
+.cell-1024,
+.cell-2048 {
+  animation: newTile 0.2s ease-in-out;
+}
+
+@keyframes newTile {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.cell-2.merge,
+.cell-4.merge,
+.cell-8.merge,
+.cell-16.merge,
+.cell-32.merge,
+.cell-64.merge,
+.cell-128.merge,
+.cell-256.merge,
+.cell-512.merge,
+.cell-1024.merge,
+.cell-2048.merge {
+  animation: mergeTile 0.2s ease-in-out;
+}
+
+@keyframes mergeTile {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .cell-2 {
@@ -329,9 +429,9 @@
 }
 
 .reset-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 1.2em;
+  margin-top: 14px;
+  padding: 8px 16px;
+  font-size: 0.8em;
   background-color: #8f7a66;
   color: white;
   border: none;
@@ -342,4 +442,8 @@
 
 .reset-button:hover {
   background-color: #7a6a5a;
+}
+
+a {
+  text-decoration: none;
 }

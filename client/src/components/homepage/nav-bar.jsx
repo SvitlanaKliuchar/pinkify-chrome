@@ -11,7 +11,7 @@ export default function NavBar() {
     <div className="nav-bar-container">
             <div className="icons-left">
                 <Link to='/mailbox'><img className='mailbox-img' src={mail} alt='mailbox icon' /></Link>
-                <Link to='/mini-games'><img className='mini-games-img' src={miniGames} alt='mini games icon' /></Link>
+                <Link to='/mini-games-greet'><img className='mini-games-img' src={miniGames} alt='mini games icon' /></Link>
             </div>
            
             <Link to='/home'><img className='logo-img' src={pinkDeer} alt="pink deer" /></Link>

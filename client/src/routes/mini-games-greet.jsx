@@ -1,17 +1,17 @@
 import Header from '../components/homepage/header.jsx'
 import NavBar from '../components/homepage/nav-bar.jsx'
 import Heading from '../components/mailpage/heading.jsx'
-import MiniGamesSelection from '../components/minigamespage/mini-games-selection.jsx'
+import MiniGamesGreet from '../components/minigamespage/mini-games-greet.jsx'
 
 
 
-export default function MiniGamesPage() {
+export default function MiniGamesGreetPage() {
     
     return (<>
-    <div className='minigamespage-container'>
+    <div className='minigamesgreetpage-container'>
         <Header />
         <Heading text="Mini Games" />
-        <MiniGamesSelection />
+        <MiniGamesGreet />
         <NavBar />
     </div>
     </>)

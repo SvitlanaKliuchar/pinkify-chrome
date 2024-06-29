@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-
 const SIZE = 4;
 
 const generateEmptyGrid = () => {
@@ -34,21 +33,28 @@ const slideRowLeft = (row) => {
   return newRow;
 };
 
-const combineRowLeft = (row) => {
+const combineRowLeft = (row, score) => {
+  let newRow = [...row];
   for (let i = 0; i < SIZE - 1; i++) {
-    if (row[i] && row[i] === row[i + 1]) {
-      row[i] *= 2;
-      row[i + 1] = null;
+    if (newRow[i] && newRow[i] === newRow[i + 1]) {
+      newRow[i] *= 2;
+      score += newRow[i];
+      newRow[i + 1] = null;
     }
   }
-  return row;
+  return { newRow, score };
 };
 
-const moveLeft = (grid) => {
+const moveLeft = (grid, score) => {
   let newGrid = grid.map((row) => slideRowLeft(row));
-  newGrid = newGrid.map((row) => combineRowLeft(row));
+  let newScore = score;
+  newGrid = newGrid.map((row) => {
+    const result = combineRowLeft(row, newScore);
+    newScore = result.score;
+    return result.newRow;
+  });
   newGrid = newGrid.map((row) => slideRowLeft(row));
-  return newGrid;
+  return { newGrid, newScore };
 };
 
 const rotateGrid = (grid) => {
@@ -78,44 +84,55 @@ const canMove = (grid) => {
 
 const Game2048 = () => {
   const [grid, setGrid] = useState(addRandomNumber(addRandomNumber(generateEmptyGrid())));
+  const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
 
   const move = (direction) => {
-    let newGrid = grid;
+    if (gameOver) return;
+
+    let newGrid = [...grid];
+    let newScore = score;
+
     for (let i = 0; i < direction; i++) {
       newGrid = rotateGrid(newGrid);
     }
-    newGrid = moveLeft(newGrid);
+
+    const result = moveLeft(newGrid, newScore);
+    newGrid = result.newGrid;
+    newScore = result.newScore;
+
     for (let i = 0; i < (4 - direction) % 4; i++) {
       newGrid = rotateGrid(newGrid);
     }
+
     if (JSON.stringify(newGrid) !== JSON.stringify(grid)) {
       newGrid = addRandomNumber(newGrid);
     }
+
     setGrid(newGrid);
+    setScore(newScore);
+
     if (isGridFull(newGrid) && !canMove(newGrid)) {
       setGameOver(true);
     }
   };
 
   const handleKeyDown = (e) => {
-    if (!gameOver) {
-      switch (e.key) {
-        case "ArrowUp":
-          move(0);
-          break;
-        case "ArrowRight":
-          move(1);
-          break;
-        case "ArrowDown":
-          move(2);
-          break;
-        case "ArrowLeft":
-          move(3);
-          break;
-        default:
-          break;
-      }
+    switch (e.key) {
+      case "ArrowUp":
+        move(0);
+        break;
+      case "ArrowRight":
+        move(1);
+        break;
+      case "ArrowDown":
+        move(2);
+        break;
+      case "ArrowLeft":
+        move(3);
+        break;
+      default:
+        break;
     }
   };
 
@@ -128,18 +145,19 @@ const Game2048 = () => {
 
   const resetGame = () => {
     setGrid(addRandomNumber(addRandomNumber(generateEmptyGrid())));
+    setScore(0);
     setGameOver(false);
   };
 
   return (
     <div className="game-2048-container">
-      <h1>2048 Game</h1>
       {gameOver && <div className="game-over">Game Over</div>}
+      <div className="score">Score: {score}</div>
       <div className="grid">
         {grid.map((row, rowIndex) => (
           <div key={rowIndex} className="row">
             {row.map((cell, cellIndex) => (
-              <div key={cellIndex} className={`cell cell-${cell}`}>
+              <div key={cellIndex} className={`cell cell-${cell} ${cell !== null ? 'merge' : ''}`}>
                 {cell}
               </div>
             ))}

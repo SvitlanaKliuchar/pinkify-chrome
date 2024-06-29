@@ -3,6 +3,7 @@ import Header from '../components/homepage/header.jsx'
 import NavBar from '../components/homepage/nav-bar.jsx'
 import DoodleJumpGame from "../components/minigamespage/doodle-jump/doodle-jump-game.jsx"
 
+
 export default function DoodleJump(){
   return (
     <>

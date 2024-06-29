@@ -219,17 +219,17 @@ export default function DoodleJumpGame() {
         <div className="doodle-jump-grid">
           {!isGameOver && (
             <>
-              <div className="score">Score: {score}</div>
+              <div className="score-doodle-jump">Score: {score}</div>
               <Doodler doodler={doodler} />
               <Platforms platforms={platforms} />
             </>
           )}
           {isGameOver && (
             <>
-              <div className="score">Score: {score}</div>
-              <div className="introduction">
-                <div className="game-name">Doodle Jump</div>
-                <div className="instructions">Press Enter to start and navigate with the
+              <div className="score-doodle-jump">Score: {score}</div>
+              <div className="introduction-doodle-jump">
+                <div className="game-name-doodle-jump">Doodle Jump</div>
+                <div className="instructions-doodle-jump">Press Enter to start and navigate with the
                 arrow keys. Don't hit the floor!</div>
               </div>
             </>

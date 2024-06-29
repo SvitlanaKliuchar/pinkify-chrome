@@ -34,6 +34,7 @@
 .homepage-container, 
 .mailpage-container, 
 .contactspage-container, 
+.minigamesgreetpage-container,
 .minigamespage-container, 
 .doodlejumppage-container, 
 .senddrawingpage-container,
@@ -90,7 +91,8 @@
 .quote-container {
     padding: 5px;
     display: grid;
-    margin-bottom: 30px
+    margin-bottom: 30px;
+    height: 135px;
 }
 
 .quote {

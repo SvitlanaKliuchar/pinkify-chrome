@@ -36,6 +36,35 @@ const isValidMove = (grid, row, col, num) => {
   return true;
 };
 
+const solveSudoku = (grid) => {
+  const findEmpty = () => {
+    for (let r = 0; r < 9; r++) {
+      for (let c = 0; c < 9; c++) {
+        if (grid[r][c] === null) {
+          return [r, c];
+        }
+      }
+    }
+    return null;
+  };
+
+  const empty = findEmpty();
+  if (!empty) return true;
+  const [row, col] = empty;
+
+  for (let num = 1; num <= 9; num++) {
+    if (isValidMove(grid, row, col, num)) {
+      grid[row][col] = num;
+      if (solveSudoku(grid)) {
+        return true;
+      }
+      grid[row][col] = null;
+    }
+  }
+
+  return false;
+};
+
 const SudokuGame = () => {
   const [grid, setGrid] = useState(generateSudokuGrid());
   const [selectedCell, setSelectedCell] = useState(null);
@@ -76,6 +105,13 @@ const SudokuGame = () => {
     }
   };
 
+  const solve = () => {
+    const newGrid = grid.map(row => [...row]);
+    if (solveSudoku(newGrid)) {
+      setGrid(newGrid);
+    }
+  };
+
   return (
     <div className="game-sudoku">
       <div className="sudoku-grid">
@@ -93,6 +129,14 @@ const SudokuGame = () => {
                 onKeyDown={(e) => handleKeyDown(e, rowIndex, cellIndex)}
                 className={`sudoku-cell ${
                   selectedCell &&
+                  (selectedCell.row === rowIndex ||
+                    selectedCell.col === cellIndex ||
+                    (Math.floor(selectedCell.row / 3) === Math.floor(rowIndex / 3) &&
+                      Math.floor(selectedCell.col / 3) === Math.floor(cellIndex / 3)))
+                    ? "highlight"
+                    : ""
+                } ${
+                  selectedCell &&
                   selectedCell.row === rowIndex &&
                   selectedCell.col === cellIndex
                     ? "selected"
@@ -103,6 +147,9 @@ const SudokuGame = () => {
           </div>
         ))}
       </div>
+      <button className="solve-button" onClick={solve}>
+        Solve
+      </button>
     </div>
   );
 };

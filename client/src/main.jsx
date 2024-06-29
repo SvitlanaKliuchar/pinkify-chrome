@@ -7,6 +7,9 @@ import './assets/styles/contacts.css'
 import './assets/styles/mini-games.css'
 import './assets/styles/send-drawing.css'
 
+
+
+
 // Import the layouts
 import RootLayout from './layouts/root-layout';
 import HomeLayout from './layouts/home-layout.jsx';
@@ -16,12 +19,13 @@ import HomePage from './routes/home.jsx';
 import SignInPage from './routes/sign-in.jsx';
 import MailPage from './routes/mail.jsx';
 import ContactsPage from './routes/contacts.jsx';
-import MiniGamesPage from './routes/mini-games.jsx';
 import DoodleJump from './routes/doodle-jump.jsx';
 import WordSearch from './routes/word-search.jsx';
 import Sudoku from './routes/sudoku.jsx';
 import TwoZeroFourEight from './routes/game2048.jsx';
 import SendDrawingPage from './routes/send-drawing.jsx';
+import MiniGamesGreetPage from './routes/mini-games-greet.jsx';
+import MiniGamesPage from './routes/mini-games.jsx';
 
 
 const router = createBrowserRouter([
@@ -31,6 +35,7 @@ const router = createBrowserRouter([
       { path: "/", element: <HomePage /> },
       { path: "/mailbox", element: <MailPage /> },
       { path: "/contacts", element: <ContactsPage /> },
+      { path: "/mini-games-greet", element: <MiniGamesGreetPage /> },
       { path: "/mini-games", element: <MiniGamesPage /> },
       { path: "/doodle-jump", element: <DoodleJump /> },
       { path: "/word-search", element: <WordSearch /> },

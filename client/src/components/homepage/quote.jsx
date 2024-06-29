@@ -5,18 +5,19 @@ import bunniesInLove from '../../assets/homepage/bunnies-in-love.webp'
 export default function Quote() {
     const [fullQuote, setFullQuote] = useState({})
 
-    useEffect(() => {
-        const fetchQuote = async () => {
-            try {
-                const res = await axios.get(`/api/quote`)
-                const newQuote = res.data.text
-                const newAuthor = res.data.author
-                setFullQuote({quote: newQuote, author: newAuthor})
+    const fetchQuote = async () => {
+        try {
+            const res = await axios.get(`/api/quote`)
+            const newQuote = res.data.text
+            const newAuthor = res.data.author
+            setFullQuote({quote: newQuote, author: newAuthor})
 
-            } catch (error) {
-                console.log("Error fetching quote", error)
-            }
+        } catch (error) {
+            console.log("Error fetching quote", error)
         }
+    }
+
+    useEffect(() => {
         fetchQuote()
     }, [])
 
