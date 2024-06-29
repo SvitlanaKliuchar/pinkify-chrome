@@ -27,13 +27,17 @@ quoteRouter.delete('/quotes', async (req, res) => {
 
 quoteRouter.get('/quote', async (req, res) => {
     try {
-        const quote = await Quote.findOne()
-        if (quote) {
-            res.status(200).json(quote);
+        const count = await Quote.countDocuments();
+        const randomIndex = Math.floor(Math.random() * count);
+        const randomQuote = await Quote.findOne().skip(randomIndex);
+
+        if (randomQuote) {
+            res.status(200).json(randomQuote);
         } else {
             res.status(404).json({ error: 'Quote not found' });
         }
     } catch (error) {
+        console.error('Error fetching quote:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
