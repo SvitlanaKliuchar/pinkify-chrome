@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import WordSearchGrid from './word-search-grid.jsx';
-import WordList from './word-list.jsx';
 
 const WordSearchGame = () => {
   const [words, setWords] = useState([
@@ -23,9 +22,8 @@ const WordSearchGame = () => {
   return (
     <div className="word-search-game">
       <h1>Word Search Game</h1>
-      <WordList words={words} />
       <WordSearchGrid words={words} markWordAsFound={markWordAsFound} />
-      <button onClick={resetGame}>Reset Game</button>
+      <button className='word-search-reset-button' onClick={resetGame}>Reset Game</button>
     </div>
   );
 };

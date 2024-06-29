@@ -1,13 +1,10 @@
-
-.mini-games-grid {
+:root {
+  --game-font: "VT323";
+}
+.mini-games-greet {
     align-items: center;
     position: relative;
-    display: grid;
-    grid-template-columns: 80% 20%;
-    grid-template-areas: 
-    'princess mini-games'
-    'princess mini-games'
-    ;
+    display: flex;
     height: 416px;
     font-size: 0.6rem;
 }
@@ -15,7 +12,6 @@
     margin-bottom: -90px;
     margin-left: -30px;
     width: 270px;
-    grid-area: princess;
 }
 .greeting-box {
     top: -40px;
@@ -34,25 +30,29 @@
     color: #141414;
     font-family: "VT323";
 }
-.mini-games {
-    margin-bottom: -80px;
-    margin-left: -80px;
-    gap: 15px;
+.mini-games-link {
     padding: 10px;
-    grid-area: mini-games;
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
 }
-.mini-game {
-  height: 120px;
-  display: flex;
+.mini-games-selection {
+  font-family: "VT323";
+  display: grid;
+  gap: 20px;
+  margin-left: 50px;
+  margin-right: 50px;
+  grid-template-columns: 1fr;
+  place-content: center;
   align-items: center;
-  justify-content: center;
+  border-radius: 10px;
+  height: 416px;
+}
+
+.mini-game {
   cursor: pointer;
   border: 2px solid pink;
   background-color: pink;
   color: white;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
+  padding: 20px;
   font-weight: bold;
   border-radius: 10px;
   transition: background-color 0.3s ease, transform 0.3s ease;
@@ -78,16 +78,6 @@
 .explore-btn:hover {
   transform: scale(1.05);
 }
-.mini-games-selection {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  align-items: center;
-  justify-content: center;
-  padding: 40px;
-  border-radius: 10px;
-}
-
 /* doodle jump */
 .doodle-jump-container {
     position: relative;
@@ -144,6 +134,7 @@
   height: 480px;
 }
 .word-search-grid {
+  font-family: "VT323";
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -164,34 +155,16 @@
 }
 
 .word-search-cell.selected {
-  background-color: #ddd;
-}
-.word-list {
-  margin-bottom: 20px;
+  background-color: pink;
+  color: white;
 }
 
-.word-list h2 {
-  margin-bottom: 10px;
-}
 
-.word-list ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.word-list li {
-  padding: 5px;
-  font-size: 18px;
-}
-
-.word-list li.found {
-  text-decoration: line-through;
-  color: #999;
-}
 .word-search-game {
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: "VT323";
 }
 
 .word-search-game h1 {
@@ -200,6 +173,20 @@
 
 .word-search-game button {
   margin-top: 20px;
+  font-family: "VT323";
+}
+.word-search-reset-button {
+  margin-top: 10px;
+  margin-bottom: 40px;
+  background-color: pink;
+  padding: 8px 16px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+.word-search-reset-button:hover {
+  background-color: rgb(30, 29, 29);
+  color: white;
 }
 /* Sudoku Game */
 .game-sudoku {
@@ -208,11 +195,8 @@
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  background-color: #f0f0f0;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
-  
 }
 
 .sudoku-grid {
@@ -237,6 +221,7 @@
   background-color: white;
   border: 1px solid #ddd;
   box-sizing: border-box;
+  font-family: var(--game-font);
 }
 
 .sudoku-cell.highlight {
@@ -248,19 +233,18 @@
 }
 
 .solve-button {
+  font-family: var(--game-font);
   margin-top: 15px;
   padding: 8px 16px;
-  font-size: 0.9em;
+  font-size: 1rem;
   background-color: pink;
-  color: white;
-  border: none;
-  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
 }
 
 .solve-button:hover {
   background-color: blue;
+  color: white;
 }
 
 /* 2048 Game */
@@ -281,6 +265,7 @@
   font-size: 1.5em;
   color: #776e65;
   margin-bottom: 10px;
+  font-family: var(--game-font);
 }
 
 .grid {
@@ -426,18 +411,19 @@
   font-size: 2em;
   font-weight: bold;
   border-radius: 10px;
+  font-family: var(--game-font);
 }
 
 .reset-button {
   margin-top: 14px;
   padding: 8px 16px;
-  font-size: 0.8em;
+  font-size: 1rem;
   background-color: #8f7a66;
   color: white;
-  border: none;
-  border-radius: 5px;
+  
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
+  font-family: var(--game-font);
 }
 
 .reset-button:hover {
