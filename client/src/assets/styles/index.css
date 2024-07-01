@@ -6,6 +6,32 @@
  * {
     box-sizing: border-box;
 } 
+.loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 9999;
+}
+
+.loader {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid pink;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 .sign-in-container {
     width: 435px;
     height: 630px;
@@ -129,21 +155,44 @@
 }
 
 /* music player component */
+
 .music-player {
-    margin: 15px 40px 15px 40px;
+    margin: 10px 30px 10px 30px ;
     padding: 5px 0 5px 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+    align-items: center;
+    height: 60px;
+    background-color: pink;
+    color: white;
+}
+
+.controls {
     display: flex;
     place-content: center;
     align-items: center;
-    justify-content: space-around;
-    
-    background-color: pink;
 }
-
-.mp-btn {
+.current-song {
+    font-size: 0.5rem;
+}
+.btn.mp-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    margin: 0 10px;
     cursor: pointer;
+    transition: transform 0.2s;
 }
 
+.btn.mp-btn:hover {
+    transform: scale(1.2);
+}
+.build-playlist {
+    height: 414px;
+}
 
 /* send note component */
 .send-note-container form {

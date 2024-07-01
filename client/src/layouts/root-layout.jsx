@@ -1,14 +1,28 @@
-import { Link, Outlet, useNavigate, Navigate } from 'react-router-dom'
-import { ClerkProvider, SignedIn, SignedOut, UserButton } from '@clerk/clerk-react'
+import { Outlet, useNavigate, Navigate, useLocation, useNavigationType } from 'react-router-dom';
+import { ClerkProvider, SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
+import Loader from '../components/loader/loader.jsx';
+import { useState, useEffect } from 'react';
 
-const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 if (!PUBLISHABLE_KEY) {
-  throw new Error("Missing Publishable Key")
+  throw new Error("Missing Publishable Key");
 }
 
 export default function RootLayout() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const navigationType = useNavigationType();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 500); 
+
+    return () => clearTimeout(timer);
+  }, [location]);
 
   return (
     <ClerkProvider
@@ -27,8 +41,8 @@ export default function RootLayout() {
         </div>
       </header>
       <main>
-        <Outlet />
+        {loading ? <Loader /> : <Outlet />}
       </main>
     </ClerkProvider>
-  )
+  );
 }

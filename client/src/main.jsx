@@ -16,6 +16,7 @@ import HomeLayout from './layouts/home-layout.jsx';
 
 // Import the routes
 import HomePage from './routes/home.jsx';
+import Playlist from './routes/playlist.jsx'
 import SignInPage from './routes/sign-in.jsx';
 import MailPage from './routes/mail.jsx';
 import ContactsPage from './routes/contacts.jsx';
@@ -28,11 +29,13 @@ import MiniGamesGreetPage from './routes/mini-games-greet.jsx';
 import MiniGamesPage from './routes/mini-games.jsx';
 
 
+
 const router = createBrowserRouter([
   {
     element: <RootLayout />,
     children: [
       { path: "/", element: <HomePage /> },
+      { path: "/build-playlist", element: <Playlist /> },
       { path: "/mailbox", element: <MailPage /> },
       { path: "/contacts", element: <ContactsPage /> },
       { path: "/mini-games-greet", element: <MiniGamesGreetPage /> },

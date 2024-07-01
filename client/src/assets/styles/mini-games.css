@@ -152,6 +152,7 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  user-select: none;
 }
 
 .word-search-cell.selected {
@@ -167,17 +168,13 @@
   font-family: "VT323";
 }
 
-.word-search-game h1 {
-  margin-bottom: 20px;
-}
-
 .word-search-game button {
   margin-top: 20px;
   font-family: "VT323";
 }
 .word-search-reset-button {
   margin-top: 10px;
-  margin-bottom: 40px;
+  margin-bottom: 54px;
   background-color: pink;
   padding: 8px 16px;
   font-size: 1rem;

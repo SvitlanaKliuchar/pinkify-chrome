@@ -1,56 +1,64 @@
 import express from 'express';
 import { Song } from '../config/models/song-model.js';
+import ytdl from 'ytdl-core';
 
 
 const songRouter = express.Router()
-let songs = [];
-let currentSongIndex = null;
 
-export const loadSongs = async () => {
-    songs = await Song.find({}, '_id filename').lean(); // Fetch only _id and filename fields
-};
+songRouter.post('/process-urls', async (req, res) => {
+    const { urls } = req.body;
+    const songs = [];
 
-// Song routes
+    for (let url of urls) {
+        try {
+            const info = await ytdl.getInfo(url);
+            const format = ytdl.chooseFormat(info.formats, { quality: 'highestaudio' });
+            const songName = info.videoDetails.title;
+            const filename = `${songName}.mp3`;
+            const output = path.resolve(__dirname, 'songs', filename);
+
+            ytdl(url, { format: format })
+                .pipe(fs.createWriteStream(output));
+
+            const song = new Song({ title: songName, filename });
+            await song.save();
+
+            songs.push({ title: songName, filename });
+        } catch (error) {
+            console.error('Error processing URL:', error);
+            return res.status(500).json({ error: 'Error processing one or more URLs.' });
+        }
+    }
+
+    res.json({ songs });
+});
+
+songRouter.get('/songs/:filename', (req, res) => {
+    const { filename } = req.params;
+    const filePath = path.resolve(__dirname, 'songs', filename);
+    res.sendFile(filePath);
+});
+
+songRouter.get('/has-songs', async (req, res) => {
+    const songCount = await Song.countDocuments();
+    res.json({ hasSongs: songCount > 0 });
+});
+
 songRouter.get('/play', async (req, res) => {
-    await loadSongs(); // Reload songs before selecting a random song
-    currentSongIndex = Math.floor(Math.random() * songs.length);
-    const randomSong = songs[currentSongIndex];
-    res.json({ id: randomSong._id, filename: randomSong.filename });
+    const song = await Song.findOne();
+    if (song) {
+        res.json({ filename: song.filename });
+    } else {
+        res.status(404).json({ error: 'No songs found' });
+    }
 });
 
 songRouter.get('/prev', async (req, res) => {
-    await loadSongs(); // Reload songs before navigating to the previous song
-    currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
-    const previousSong = songs[currentSongIndex];
-    res.json({ id: previousSong._id, filename: previousSong.filename });
+    // Implement logic for previous song
 });
 
 songRouter.get('/next', async (req, res) => {
-    await loadSongs(); 
-    currentSongIndex = (currentSongIndex + 1) % songs.length;
-    const nextSong = songs[currentSongIndex];
-    res.json({ id: nextSong._id, filename: nextSong.filename });
-});
-
-songRouter.get('/songs', async (req, res) => {
-    const songs = await Song.find();
-    res.status(200).json(songs);
-});
-
-songRouter.post('/songs', async (req, res) => {
-    const newSong = new Song(req.body);
-    await newSong.save();
-    res.status(200).json(newSong);
-});
-
-songRouter.delete('/songs', async (req, res) => {
-    try {
-        await Song.deleteMany({});
-        res.status(200).json({ message: 'All songs deleted from the database.' });
-    } catch (error) {
-        console.error('Error clearing songs from the database:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
+    // Implement logic for next song
 });
 
 export default songRouter
