@@ -3,7 +3,7 @@ import { Contact } from '../config/models/contact-model.js';
 
 const contactRouter = express.Router();
 
-// Get all contacts for a specific user
+//get all contacts for a specific user
 contactRouter.get('/contacts/:email', async (req, res) => {
     try {
         const email = req.params.email;
@@ -15,12 +15,12 @@ contactRouter.get('/contacts/:email', async (req, res) => {
     }
 });
 
-// Add a new contact to contacts db
+//add a new contact to contacts db
 contactRouter.post('/contacts/new', async (req, res) => {
     try {
         const { user, contactEmail, contactName } = req.body;
 
-        // Check if the contact already exists
+        //check if the contact already exists
         const existingContact = await Contact.findOne({ user, contactEmail });
         if (existingContact) {
             console.log(`Contact already exists: ${contactEmail}`);
@@ -38,7 +38,7 @@ contactRouter.post('/contacts/new', async (req, res) => {
     }
 });
 
-// Endpoint to update contact name
+//endpoint to update contact name
 contactRouter.put('/contacts/update', async (req, res) => {
     try {
         const { email, contactEmail, contactName } = req.body;

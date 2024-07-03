@@ -6,19 +6,97 @@
 }
 
 .profile {
-
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
 }
-
-.playlists {
-
+.user-info {
+    font-size: 0.8rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
 }
-
+.user-info span{
+    color: pink;
+}
+.user-info p {
+    color: black;
+}
+.playlist {
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+.song-list {
+    overflow: scroll;
+    display: grid;
+    grid-template-columns: 250px 100px;
+    gap: 20px;
+    align-items: center;
+    margin-left: -20px;
+    
+}
+.song {
+    font-size: 0.7rem;
+    list-style-type: none;
+}
+.download-btn {
+    border: 1px solid black;
+    font-size: inherit;  
+}
+.download-btn:hover {
+    color: pink;
+    border: 1px solid pink;
+}
+.update-playlist-form {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+.update-playlist-btn {
+    border: 1px solid pink;
+    font-size: 0.7rem;
+    padding: 5px 15px;
+    background-color: pink;
+    color: white;
+}
+.update-playlist-btn:hover {
+    background-color: white;
+    border: 1px solid pink;
+    color: pink;
+    
+}
 .actions {
     display: flex;
+    flex-direction: column;
     gap: 10px;
     
 }
 .actions button {
+    background-color: pink;
+    color: white;
+}
+.smaller-font {
+    font-size: 0.9rem;
+}
+.cleanup {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 10px 10px 0 10px;
+}
+.delete-all-btn {
+    font-size: 0.8rem;
+    background-color: white;
+    color: pink;
+    border: 1px solid pink;
+}
+.delete-all-btn:hover {
+    
     background-color: pink;
     color: white;
 }

@@ -75,10 +75,6 @@ const Settings = () => {
         setYoutubeUrls(newUrls);
     };
 
-    const handleAddUrl = () => {
-        setYoutubeUrls([...youtubeUrls, '']);
-    };
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
@@ -103,34 +99,35 @@ const Settings = () => {
 
     return (
         <div className="settings">
-            <div className="tabs">
-                <button onClick={() => setActiveTab('user')} className={activeTab === 'user' ? 'active' : ''}>User Information</button>
-                <button onClick={() => setActiveTab('music')} className={activeTab === 'music' ? 'active' : ''}>Music Settings</button>
-                <button onClick={() => setActiveTab('cleanup')} className={activeTab === 'cleanup' ? 'active' : ''}>Clean Up</button>
+            <div className="tabs-container">
+                <button onClick={() => setActiveTab('user')} className={activeTab === 'user' ? 'tab active smaller-font' : 'tab smaller-font'}>User Info</button>
+                <button onClick={() => setActiveTab('music')} className={activeTab === 'music' ? 'tab active smaller-font' : 'tab smaller-font'}>Your playlist</button>
+                <button onClick={() => setActiveTab('cleanup')} className={activeTab === 'cleanup' ? 'tab active smaller-font' : 'tab smaller-font'}>Clean Up</button>
             </div>
 
             {activeTab === 'user' && (
                 <div className="profile">
-                    <h4>Profile</h4>
                     <UserButton />
-                    <p>Name: {user.fullName}</p>
-                    <p>Email: {user.primaryEmailAddress.emailAddress}</p>
+                    <div className='user-info'>
+                        <span>Name: </span><p>{user.fullName}</p>
+                        <span>Email: </span><p>{user.primaryEmailAddress.emailAddress}</p>
+                        <span>User Id: </span><p>{user.id}</p>
+                    </div>
+                    
                 </div>
             )}
 
             {activeTab === 'music' && (
-                <div className="playlists">
-                    <h3>Your Playlist</h3>
-                    <ul>
-                        {songs.map((song, index) => (
-                            <li key={index}>
+                <div className="playlist">
+                    <ul className='song-list'>
+                        {songs.map((song, index) => (<>
+                            <li className='song' key={index}>
                                 {song.title}
-                                <button onClick={() => handleDownloadSong(song.youtubeId, song.title)}>Download</button>
                             </li>
-                        ))}
+                            <button className='btn download-btn' onClick={() => handleDownloadSong(song.youtubeId, song.title)}>Download</button>
+                            </>))}
                     </ul>
-                    <h4>Add More Songs</h4>
-                    <form onSubmit={handleSubmit} className='build-playlist-form'>
+                    <form onSubmit={handleSubmit} className='update-playlist-form'>
                         {youtubeUrls.map((url, index) => (
                             <div key={index}>
                                 <input
@@ -143,8 +140,7 @@ const Settings = () => {
                                 />
                             </div>
                         ))}
-                        <button type="button" onClick={handleAddUrl} className='add-url-btn'>Add another URL</button>
-                        <button type="submit" className='submit-btn'>Submit</button>
+                        <button type="submit" className='btn update-playlist-btn'>Update playlist</button>
                     </form>
                     {loading && <p>Loading...</p>}
                     {message && <p>{message}</p>}
@@ -153,10 +149,9 @@ const Settings = () => {
 
             {activeTab === 'cleanup' && (
                 <div className="cleanup">
-                    <h3>Clean Up</h3>
-                    <button onClick={handleDeleteSongs}>Delete All Songs</button>
-                    <button onClick={handleDeleteNotes}>Delete All Notes</button>
-                    <button onClick={handleDeleteDrawings}>Delete All Drawings</button>
+                    <button onClick={handleDeleteSongs} className='btn delete-all-btn'>Delete All Songs</button>
+                    <button onClick={handleDeleteNotes} className='btn delete-all-btn'>Delete All Notes</button>
+                    <button onClick={handleDeleteDrawings} className='btn delete-all-btn'>Delete All Drawings</button>
                     {message && <p>{message}</p>}
                 </div>
             )}
