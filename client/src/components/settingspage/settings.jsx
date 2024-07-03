@@ -68,7 +68,7 @@ const Settings = () => {
             setMessage('Error downloading the song. Please try again.');
         }
     };
-
+    
     const handleUrlChange = (index, event) => {
         const newUrls = [...youtubeUrls];
         newUrls[index] = event.target.value;

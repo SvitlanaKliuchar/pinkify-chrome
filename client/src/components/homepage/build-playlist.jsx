@@ -6,7 +6,7 @@ const BuildPlaylist = () => {
     const [youtubeUrls, setYoutubeUrls] = useState(['']);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
-    const {user} = useUser()
+    const {user} = useUser();
 
     const handleUrlChange = (index, event) => {
         const newUrls = [...youtubeUrls];

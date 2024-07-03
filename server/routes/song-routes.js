@@ -164,4 +164,28 @@ songRouter.get('/songs/:id', async (req, res) => {
     }
 });
 
+//route to handle downloading a song
+songRouter.get('/download-song/:youtubeId', async (req, res) => {
+    const { youtubeId } = req.params;
+    try {
+        const song = await Song.findOne({ youtubeId: youtubeId });
+        if (!song) {
+            return res.status(404).json({ error: 'Song not found' });
+        }
+
+        const filePath = song.filePath;
+        res.setHeader('Content-Disposition', `attachment; filename=${song.title}.mp3`);
+        res.sendFile(filePath, (err) => {
+            if (err) {
+                console.error('Error sending file:', err);
+                res.status(500).json({ error: 'Error sending file' });
+            }
+        });
+    } catch (error) {
+        console.error('Error downloading the song:', error);
+        res.status(500).send('Error downloading the song');
+    }
+});
+
 export default songRouter;
+
