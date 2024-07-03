@@ -33,7 +33,7 @@ export default function RootLayout() {
       <header>
         <div>
           <SignedIn>
-            <Navigate to="/home" replace /> <UserButton />
+            <Navigate to="/home" replace />
           </SignedIn>
           <SignedOut>
             <Navigate to="/sign-in" replace/>

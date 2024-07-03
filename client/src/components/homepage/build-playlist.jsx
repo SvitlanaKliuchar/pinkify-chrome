@@ -22,8 +22,9 @@ const BuildPlaylist = () => {
         setMessage('');
 
         try {
-            await axios.post('/api/process-urls', { urls: youtubeUrls });
+            const response = await axios.post('/api/process-urls', { urls: youtubeUrls });
             setMessage('Playlist created successfully!');
+            console.log('Processed songs:', response.data.songs);
         } catch (error) {
             console.error('Error processing URLs:', error);
             setMessage('Error processing URLs. Please try again.');
@@ -34,8 +35,7 @@ const BuildPlaylist = () => {
 
     return (
         <div className="build-playlist">
-            <h2>Create Your Playlist</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className='build-playlist-form'>
                 {youtubeUrls.map((url, index) => (
                     <div key={index}>
                         <input
@@ -43,14 +43,15 @@ const BuildPlaylist = () => {
                             value={url}
                             onChange={(event) => handleUrlChange(index, event)}
                             placeholder="Enter YouTube URL"
+                            className='url-input'
                             required
                         />
                     </div>
                 ))}
-                <button type="button" onClick={handleAddUrl}>Add Another URL</button>
-                <button type="submit" disabled={loading}>{loading ? 'Processing...' : 'Create Playlist'}</button>
+                <button type="button" onClick={handleAddUrl} className='btn add-url-btn'>Add Another URL</button>
+                {message && <p>{message}</p>}
+                <button type="submit" disabled={loading} className='btn create-playlist-btn'>{loading ? 'Processing...' : 'Create Playlist'}</button>
             </form>
-            {message && <p>{message}</p>}
         </div>
     );
 };

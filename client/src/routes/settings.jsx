@@ -1,15 +1,15 @@
 import Header from "../components/homepage/header"
 import Heading from "../components/mailpage/heading"
 import NavBar from "../components/homepage/nav-bar"
-import BuildPlaylist from "../components/homepage/build-playlist"
+import Settings from "../components/settingspage/settings"
 
-export default function Playlist() {
+export default function SettingsPage() {
 
     return  (<>
     <div className="page-container">
         <Header />
-        <Heading text="Build your playlist"/>
-        <BuildPlaylist />
+        <Heading text="Settings"/>
+        <Settings />
         <NavBar />
     </div>
     </>)

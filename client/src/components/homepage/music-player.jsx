@@ -5,40 +5,57 @@ import { useNavigate } from 'react-router-dom';
 
 const MusicPlayer = () => {
     const [isPlaying, setIsPlaying] = useState(false);
-    const [currentSong, setCurrentSong] = useState('');
+    const [playlist, setPlaylist] = useState([]);
+    const [currentIndex, setCurrentIndex] = useState(0);
     const [hasSongs, setHasSongs] = useState(true);
     const audioRef = useRef(new Audio());
     const navigate = useNavigate();
 
     useEffect(() => {
-        const checkSongs = async () => {
+        const fetchPlaylist = async () => {
             try {
-                const res = await axios.get('/api/has-songs');
-                setHasSongs(res.data.hasSongs);
-                if (!res.data.hasSongs) {
-                    navigate('/build-playlist');
+                const res = await axios.get('/api/playlist');
+                if (res.data.songs.length > 0) {
+                    setPlaylist(res.data.songs);
+                } else {
+                    setHasSongs(false);
                 }
             } catch (error) {
-                console.log('Error checking songs:', error);
+                console.log('Error fetching playlist:', error);
             }
         };
-        checkSongs();
-    }, [navigate]);
+        fetchPlaylist();
+    }, []);
 
-    const handlePlay = async () => {
+    useEffect(() => {
+        if (isPlaying) {
+            playCurrentSong();
+        }
+    }, [currentIndex]);
+
+    const playCurrentSong = async () => {
         try {
-            if (!hasSongs) {
-                navigate('/build-playlist');
-                return;
+            const currentSong = playlist[currentIndex];
+            if (currentSong && currentSong.youtubeId) {
+                const filePath = `/api/songs/${currentSong.youtubeId}.mp3`;
+                audioRef.current.src = filePath;
+                await audioRef.current.play();
+                console.log(`Playing song: ${filePath}`);
+            } else {
+                console.log('Current song id is undefined', currentSong);
             }
-            const res = await axios.get('/api/play');
-            const newSongFilename = res.data.filename;
-            setCurrentSong(newSongFilename);
-            setIsPlaying(true);
-            audioRef.current.src = `/api/songs/${newSongFilename}`;
-            audioRef.current.play();
         } catch (error) {
-            console.log('Error fetching or playing a song:', error);
+            console.log('Error playing song:', error);
+        }
+    };
+    
+
+    const handlePlay = () => {
+        if (hasSongs && playlist.length > 0) {
+            playCurrentSong();
+            setIsPlaying(true);
+        } else {
+            navigate('/build-playlist');
         }
     };
 
@@ -47,13 +64,19 @@ const MusicPlayer = () => {
         setIsPlaying(false);
     };
 
-    const handlePrev = async () => {
-        // Implement previous song functionality
+    const handlePrev = () => {
+        if (currentIndex > 0) {
+            setCurrentIndex(currentIndex - 1);
+        }
     };
 
-    const handleNext = async () => {
-        // Implement next song functionality
+    const handleNext = () => {
+        if (currentIndex < playlist.length - 1) {
+            setCurrentIndex(currentIndex + 1);
+        }
     };
+
+    const currentSongTitle = playlist[currentIndex]?.title || 'No song playing';
 
     return (
         <div className="music-player">
@@ -68,7 +91,7 @@ const MusicPlayer = () => {
                     <FaStepForward />
                 </button>
             </div>
-            <div className="current-song">{currentSong}</div>
+            <div className="current-song">{currentSongTitle}</div>
         </div>
     );
 };

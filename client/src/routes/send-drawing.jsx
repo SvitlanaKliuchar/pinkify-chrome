@@ -6,7 +6,7 @@ import Heading from "../components/mailpage/heading.jsx"
 export default function SendDrawingPage() {
 
     return  (<>
-    <div className="senddrawingpage-container">
+    <div className="page-container">
         <Header />
         <Heading text="Make somebody happy by sending them a drawing" />
         <SendDrawing />

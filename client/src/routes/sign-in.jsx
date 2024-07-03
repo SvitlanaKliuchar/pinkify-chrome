@@ -1,7 +1,7 @@
 import { SignInButton, SignUpButton } from "@clerk/clerk-react"
 export default function SignInPage() {
     return (<>
-        <div className="sign-in-container">
+        <div className="page-container">
             <SignUpButton className="sign-up-btn" />
             <SignInButton className="sign-in-btn" />
         </div>

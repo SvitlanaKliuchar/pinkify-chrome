@@ -6,6 +6,7 @@ import './assets/styles/mailbox.css'
 import './assets/styles/contacts.css'
 import './assets/styles/mini-games.css'
 import './assets/styles/send-drawing.css'
+import './assets/styles/settings.css'
 
 
 
@@ -20,13 +21,14 @@ import Playlist from './routes/playlist.jsx'
 import SignInPage from './routes/sign-in.jsx';
 import MailPage from './routes/mail.jsx';
 import ContactsPage from './routes/contacts.jsx';
-import DoodleJump from './routes/doodle-jump.jsx';
-import WordSearch from './routes/word-search.jsx';
-import Sudoku from './routes/sudoku.jsx';
-import TwoZeroFourEight from './routes/game2048.jsx';
+import DoodleJump from './routes/mini-games/doodle-jump.jsx';
+import WordSearch from './routes/mini-games/word-search.jsx';
+import Sudoku from './routes/mini-games/sudoku.jsx';
+import TwoZeroFourEight from './routes/mini-games/game2048.jsx';
 import SendDrawingPage from './routes/send-drawing.jsx';
-import MiniGamesGreetPage from './routes/mini-games-greet.jsx';
-import MiniGamesPage from './routes/mini-games.jsx';
+import MiniGamesGreetPage from './routes/mini-games/mini-games-greet.jsx';
+import MiniGamesPage from './routes/mini-games/mini-games.jsx';
+import SettingsPage from './routes/settings.jsx';
 
 
 
@@ -46,6 +48,7 @@ const router = createBrowserRouter([
       { path: "/2048", element: <TwoZeroFourEight /> },
       { path: "/send-drawing", element: <SendDrawingPage /> },
       { path: "/sign-in/*", element: <SignInPage /> },
+      { path: "/settings", element: <SettingsPage /> },
       {
         element: <HomeLayout />,
         path: "home",

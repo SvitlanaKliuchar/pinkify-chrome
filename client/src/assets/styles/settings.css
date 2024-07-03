@@ -1,0 +1,24 @@
+.settings {
+    height: 413px;
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8rem;
+}
+
+.profile {
+
+}
+
+.playlists {
+
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    
+}
+.actions button {
+    background-color: pink;
+    color: white;
+}

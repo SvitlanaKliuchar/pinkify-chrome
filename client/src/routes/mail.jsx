@@ -13,7 +13,7 @@ export default function MailPage() {
     const tabs = ["Notes", "Drawings", "Favourites"];
 
     return (<>
-    <div className='mailpage-container'>
+    <div className='page-container'>
         <Header />
         <Heading  text="MailBox" />
         <Tabs tabs={tabs} activeTab={activeTab} onTabClick={setActiveTab} />

@@ -1,9 +1,13 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const songSchema = new mongoose.Schema({
-    title: String,
-    filename: String,
+    id: { type: Number, required: true },
+    title: { type: String, required: true },
+    filePath: { type: String, required: true },
+    youtubeId: { type: String, required: true },
+    duration: { type: Number, required: true },
 });
 
-export const Song = mongoose.model('Song', songSchema);
+const Song = mongoose.model('Song', songSchema);
 
+export default Song;

@@ -1,5 +1,3 @@
-import fs from 'fs'
-import { Song } from './models/song-model.js'
 import { Quote } from './models/quote-model.js'
 
 const mainAuthor = "Haruki Murakami"

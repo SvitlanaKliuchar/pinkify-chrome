@@ -7,7 +7,7 @@ import Contacts from '../components/contactspage/contacts.jsx'
 export default function ContactsPage() {
     
     return (<>
-    <div className='contactspage-container'>
+    <div className='page-container'>
         <Header />
         <Heading text="Contacts" />
         <Contacts />

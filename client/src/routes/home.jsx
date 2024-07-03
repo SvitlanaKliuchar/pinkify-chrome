@@ -7,7 +7,7 @@ import NavBar from "../components/homepage/nav-bar"
 export default function HomePage() {
 
     return  (<>
-    <div className="homepage-container">
+    <div className="page-container">
         <Header />
         <Quote />
         <MusicPlayer />
