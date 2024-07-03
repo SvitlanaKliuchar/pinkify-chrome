@@ -6,6 +6,7 @@ const songSchema = new mongoose.Schema({
     filePath: { type: String, required: true },
     youtubeId: { type: String, required: true },
     duration: { type: Number, required: true },
+    userId: { type: String, required: true },
 });
 
 const Song = mongoose.model('Song', songSchema);

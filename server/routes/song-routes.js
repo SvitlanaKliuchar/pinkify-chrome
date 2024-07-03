@@ -11,10 +11,10 @@ const __dirname = path.dirname(__filename);
 
 const songRouter = express.Router();
 
-// Serve static files from the songs directory
+//serve static files from the songs directory
 songRouter.use('/songs', express.static(path.join(__dirname, '..', 'songs')));
 
-// Helper function to convert a YouTube URL to MP3 and save it
+//helper function to convert a YouTube URL to MP3 and save it
 const convertToMp3 = (url, outputPath) => {
     return new Promise((resolve, reject) => {
         ffmpeg(ytdl(url, { quality: 'highestaudio' }))
@@ -27,8 +27,9 @@ const convertToMp3 = (url, outputPath) => {
     });
 };
 
-// Endpoint to process YouTube URLs and save songs to the database and filesystem
-songRouter.post('/process-urls', async (req, res) => {
+//endpoint to process YouTube URLs and save songs to the database and filesystem
+songRouter.post('/process-urls/:userId', async (req, res) => {
+    const userId = req.params.userId
     const { urls } = req.body;
     const songs = [];
 
@@ -60,6 +61,7 @@ songRouter.post('/process-urls', async (req, res) => {
                     filePath,
                     youtubeId,
                     duration,
+                    userId: userId
                 });
 
                 await song.save();
@@ -81,7 +83,7 @@ songRouter.post('/process-urls', async (req, res) => {
     }
 });
 
-// Endpoint to serve a specific song file by its filename
+//endpoint to serve a specific song file by its filename
 songRouter.get('/songs/:filename', async (req, res) => {
     const { filename } = req.params;
     const filePath = path.resolve(__dirname, '..', 'songs', filename);
@@ -104,7 +106,7 @@ songRouter.get('/songs/:filename', async (req, res) => {
     }
 });
 
-// Endpoint to check if there are any songs in the database
+//endpoint to check if there are any songs in the database
 songRouter.get('/has-songs', async (req, res) => {
     try {
         const songCount = await Song.countDocuments();
@@ -115,7 +117,7 @@ songRouter.get('/has-songs', async (req, res) => {
     }
 });
 
-// Endpoint to fetch details of the currently playing song
+//endpoint to fetch details of the currently playing song
 songRouter.get('/play', async (req, res) => {
     try {
         const song = await Song.findOne().sort({ id: 1 });
@@ -130,18 +132,23 @@ songRouter.get('/play', async (req, res) => {
     }
 });
 
-// Endpoint to fetch all songs in the playlist
-songRouter.get('/playlist', async (req, res) => {
+//endpoint to fetch all songs in the playlist of a specific user
+songRouter.get('/playlist/:userId', async (req, res) => {
+    const userId = req.params.userId;
+    if (!userId) {
+        return res.status(400).send({ message: 'User ID is required' });
+    }
+
     try {
-        const songs = await Song.find().sort({ id: 1 });
-        res.json({ songs });
+        const songs = await Song.find({ userId: userId });
+        res.send({ songs });
     } catch (error) {
         console.error('Error fetching playlist:', error);
-        res.status(500).json({ error: 'Error fetching playlist' });
+        res.status(500).send({ message: 'Error fetching playlist' });
     }
 });
 
-// Endpoint to fetch details of a specific song by its id
+//endpoint to fetch details of a specific song by its id
 songRouter.get('/songs/:id', async (req, res) => {
     const { id } = req.params;
     try {

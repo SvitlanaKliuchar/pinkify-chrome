@@ -3,27 +3,30 @@ import { useUser, UserButton } from '@clerk/clerk-react';
 import axios from 'axios';
 
 const Settings = () => {
-    const { user } = useUser();
+    const { user, isLoaded } = useUser();
     const [activeTab, setActiveTab] = useState('user');
     const [songs, setSongs] = useState([]);
+    const [youtubeUrls, setYoutubeUrls] = useState(['']);
+    const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        const fetchSongs = async () => {
-            try {
-                const response = await axios.get(`/api/get-all-songs?userId=${user.id}`);
-                setSongs(response.data);
-            } catch (error) {
-                console.error('Error fetching songs:', error);
-            }
-        };
-
-        fetchSongs();
-    }, [user.id]);
+        if (isLoaded && user) {
+            const fetchSongs = async () => {
+                try {
+                    const response = await axios.get(`/api/playlist/${user.id}`);
+                    setSongs(response.data.songs);
+                } catch (error) {
+                    console.error('Error fetching songs:', error);
+                }
+            };
+            fetchSongs();
+        }
+    }, [isLoaded, user]);
 
     const handleDeleteSongs = async () => {
         try {
-            await axios.delete('/api/delete-all-songs');
+            await axios.delete(`/api/delete-all-songs/${user.id}`);
             setMessage('All songs deleted successfully!');
         } catch (error) {
             console.error('Error deleting all songs:', error);
@@ -33,7 +36,7 @@ const Settings = () => {
 
     const handleDeleteNotes = async () => {
         try {
-            await axios.delete('/api/delete-all-notes');
+            await axios.delete(`/api/delete-all-notes/${user.id}`);
             setMessage('All notes deleted successfully!');
         } catch (error) {
             console.error('Error deleting all notes:', error);
@@ -43,7 +46,7 @@ const Settings = () => {
 
     const handleDeleteDrawings = async () => {
         try {
-            await axios.delete('/api/delete-all-drawings');
+            await axios.delete(`/api/delete-all-drawings/${user.id}`);
             setMessage('All drawings deleted successfully!');
         } catch (error) {
             console.error('Error deleting all drawings:', error);
@@ -65,6 +68,38 @@ const Settings = () => {
             setMessage('Error downloading the song. Please try again.');
         }
     };
+
+    const handleUrlChange = (index, event) => {
+        const newUrls = [...youtubeUrls];
+        newUrls[index] = event.target.value;
+        setYoutubeUrls(newUrls);
+    };
+
+    const handleAddUrl = () => {
+        setYoutubeUrls([...youtubeUrls, '']);
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        setLoading(true);
+        setMessage('');
+
+        try {
+            const response = await axios.post(`/api/process-urls/${user.id}`, { urls: youtubeUrls, userId: user.id });
+            setMessage('Songs added successfully!');
+            setSongs([...songs, ...response.data.songs]);
+            setYoutubeUrls(['']);
+        } catch (error) {
+            console.error('Error processing URLs:', error);
+            setMessage('Error processing URLs. Please try again.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (!isLoaded || !user) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className="settings">
@@ -94,18 +129,37 @@ const Settings = () => {
                             </li>
                         ))}
                     </ul>
+                    <h4>Add More Songs</h4>
+                    <form onSubmit={handleSubmit} className='build-playlist-form'>
+                        {youtubeUrls.map((url, index) => (
+                            <div key={index}>
+                                <input
+                                    type="text"
+                                    value={url}
+                                    onChange={(event) => handleUrlChange(index, event)}
+                                    placeholder="Enter YouTube URL"
+                                    className='url-input'
+                                    required
+                                />
+                            </div>
+                        ))}
+                        <button type="button" onClick={handleAddUrl} className='add-url-btn'>Add another URL</button>
+                        <button type="submit" className='submit-btn'>Submit</button>
+                    </form>
+                    {loading && <p>Loading...</p>}
+                    {message && <p>{message}</p>}
                 </div>
             )}
 
             {activeTab === 'cleanup' && (
-                <div className="actions">
+                <div className="cleanup">
+                    <h3>Clean Up</h3>
                     <button onClick={handleDeleteSongs}>Delete All Songs</button>
                     <button onClick={handleDeleteNotes}>Delete All Notes</button>
                     <button onClick={handleDeleteDrawings}>Delete All Drawings</button>
+                    {message && <p>{message}</p>}
                 </div>
             )}
-
-            {message && <p>{message}</p>}
         </div>
     );
 };

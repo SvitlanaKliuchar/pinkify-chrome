@@ -2,8 +2,10 @@ import { useState, useRef, useEffect } from 'react';
 import { FaPlay, FaPause, FaStepBackward, FaStepForward } from 'react-icons/fa';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '@clerk/clerk-react';
 
 const MusicPlayer = () => {
+    const { user, isLoaded } = useUser();
     const [isPlaying, setIsPlaying] = useState(false);
     const [playlist, setPlaylist] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -12,20 +14,22 @@ const MusicPlayer = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchPlaylist = async () => {
-            try {
-                const res = await axios.get('/api/playlist');
-                if (res.data.songs.length > 0) {
-                    setPlaylist(res.data.songs);
-                } else {
-                    setHasSongs(false);
+        if (isLoaded && user) {
+            const fetchPlaylist = async () => {
+                try {
+                    const res = await axios.get(`/api/playlist/${user.id}`);
+                    if (res.data.songs.length > 0) {
+                        setPlaylist(res.data.songs);
+                    } else {
+                        setHasSongs(false);
+                    }
+                } catch (error) {
+                    console.log('Error fetching playlist:', error);
                 }
-            } catch (error) {
-                console.log('Error fetching playlist:', error);
-            }
-        };
-        fetchPlaylist();
-    }, []);
+            };
+            fetchPlaylist();
+        }
+    }, [isLoaded, user]);
 
     useEffect(() => {
         if (isPlaying) {
@@ -48,7 +52,6 @@ const MusicPlayer = () => {
             console.log('Error playing song:', error);
         }
     };
-    
 
     const handlePlay = () => {
         if (hasSongs && playlist.length > 0) {
@@ -77,6 +80,10 @@ const MusicPlayer = () => {
     };
 
     const currentSongTitle = playlist[currentIndex]?.title || 'No song playing';
+
+    if (!isLoaded || !user) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className="music-player">

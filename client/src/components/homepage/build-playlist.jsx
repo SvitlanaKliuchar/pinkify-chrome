@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import axios from 'axios';
+import {useUser} from '@clerk/clerk-react'
 
 const BuildPlaylist = () => {
     const [youtubeUrls, setYoutubeUrls] = useState(['']);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
+    const {user} = useUser()
 
     const handleUrlChange = (index, event) => {
         const newUrls = [...youtubeUrls];
@@ -22,7 +24,7 @@ const BuildPlaylist = () => {
         setMessage('');
 
         try {
-            const response = await axios.post('/api/process-urls', { urls: youtubeUrls });
+            const response = await axios.post(`/api/process-urls/${user.id}`, { urls: youtubeUrls });
             setMessage('Playlist created successfully!');
             console.log('Processed songs:', response.data.songs);
         } catch (error) {
